@@ -146,47 +146,70 @@ elif menu_utama == "🧬 Kalkulator pH ":
             st.progress(min(max(ph_akhir / 14.0, 0.0), 1.0))
 
 # =========================================================================
-# MENU 3: DATABASE INVENTARIS BAHAN LAB
+# MENU 3: DATABASE INVENTARIS BAHAN LAB (VERSI SUPER LENGKAP - 30 BAHAN)
 # =========================================================================
 elif menu_utama == "📦 Inventaris Bahan Lab":
     st.markdown("### 📦 Manajemen Informasi & Inventaris Bahan Laboratorium")
-    st.write("Daftar referensi sifat fisis, massa molar, dan klasifikasi bahaya GHS bahan kimia.")
+    st.write("Daftar referensi komprehensif mencakup 30 bahan kimia utama di laboratorium.")
     
-    # Perluasan database dengan variasi bahan kimia laboratorium terpopuler
+    # Database komprehensif: 30 Bahan Kimia Laboratorium
     data_bahan = {
-        # --- KELOMPOK PELARUT & UTALITAS ---
-        "Akuades (H2O)": {"Formula": "H2O", "Mr": 18.02, "Sifat": "Pelarut universal, cairan jernih, netral.", "Bahaya": "Aman / Non-Hazardous", "Warna": "#10B981"},
-        "Etanol (C2H5OH)": {"Formula": "C2H5OH", "Mr": 46.07, "Sifat": "Pelarut organik, alkohol, sangat mudah menguap.", "Bahaya": "Cairan mudah terbakar (Flammable).", "Warna": "#F59E0B"},
-        "Aseton (CH3COCH3)": {"Formula": "CH3COCH3", "Mr": 58.08, "Sifat": "Pelarut organik polar, pembersih alat gelas.", "Bahaya": "Sangat mudah terbakar, iritasi mata.", "Warna": "#F59E0B"},
-        "Metanol (CH3OH)": {"Formula": "CH3OH", "Mr": 32.04, "Sifat": "Pelarut alkohol sederhana, cairan beracun.", "Bahaya": "Mudah terbakar, sangat toksik jika tertelan.", "Warna": "#EF4444"},
+        # --- KELOMPOK PELARUT & CAIRAN UTAMA ---
+        "Akuades (H2O)": {"Formula": "H2O", "Mr": 18.02, "Grup": "Pelarut & Utalitas", "Sifat": "Pelarut universal, cairan jernih, netral.", "Bahaya": "Aman / Non-Hazardous", "Warna": "#10B981"},
+        "Etanol (C2H5OH)": {"Formula": "C2H5OH", "Mr": 46.07, "Grup": "Pelarut Organik", "Sifat": "Pelarut organik, alkohol, sangat mudah menguap.", "Bahaya": "Cairan mudah terbakar (Flammable).", "Warna": "#F59E0B"},
+        "Aseton (CH3COCH3)": {"Formula": "CH3COCH3", "Mr": 58.08, "Grup": "Pelarut Organik", "Sifat": "Pelarut organik polar, pembersih alat gelas.", "Bahaya": "Sangat mudah terbakar, iritasi mata.", "Warna": "#F59E0B"},
+        "Metanol (CH3OH)": {"Formula": "CH3OH", "Mr": 32.04, "Grup": "Pelarut Organik", "Sifat": "Pelarut alkohol sederhana, cairan beracun.", "Bahaya": "Mudah terbakar, sangat toksik jika tertelan.", "Warna": "#EF4444"},
+        "Kloroform (CHCl3)": {"Formula": "CHCl3", "Mr": 119.38, "Grup": "Pelarut Organik", "Sifat": "Pelarut non-polar, berbau manis khas, anestetik.", "Bahaya": "Toksik, dicurigai menyebabkan kanker (Karsinogenik).", "Warna": "#EF4444"},
+        "n-Heksana (C6H14)": {"Formula": "C6H14", "Mr": 86.18, "Grup": "Pelarut Organik", "Sifat": "Pelarut non-polar, sering digunakan untuk ekstraksi lemak.", "Bahaya": "Cairan mudah terbakar, toksik terhadap saraf.", "Warna": "#EF4444"},
         
-        # --- KELOMPOK ASAM ---
-        "Asam Klorida (HCl)": {"Formula": "HCl", "Mr": 36.46, "Sifat": "Asam mineral kuat, berasap pada konsentrasi pekat.", "Bahaya": "Sangat Korosif, iritasi saluran pernapasan.", "Warna": "#EF4444"},
-        "Asam Sulfat (H2SO4)": {"Formula": "H2SO4", "Mr": 98.08, "Sifat": "Asam kuat kental, dehidrator berat, eksotermik tinggi.", "Bahaya": "Sangat korosif, destruktif pada jaringan kulit.", "Warna": "#EF4444"},
-        "Asam Nitrat (HNO3)": {"Formula": "HNO3", "Mr": 63.01, "Sifat": "Asam kuat pengoksidasi, agen nitrasi.", "Bahaya": "Korosif berat, oksidator kuat.", "Warna": "#EF4444"},
-        "Asam Asetat (CH3COOH)": {"Formula": "CH3COOH", "Mr": 60.05, "Sifat": "Asam organik lemah, berbau menyengat (cuka glasial).", "Bahaya": "Korosif pada kadar tinggi, cairan mudah terbakar.", "Warna": "#F59E0B"},
-        "Asam Oksalat (H2C2O4)": {"Formula": "H2C2O4", "Mr": 90.03, "Sifat": "Asam organik lemah, padatan kristal putih.", "Bahaya": "Berbahaya jika terkena kulit, toksik.", "Warna": "#F59E0B"},
+        # --- KELOMPOK ASAM COCOK UNTUK TITRASI ---
+        "Asam Klorida (HCl)": {"Formula": "HCl", "Mr": 36.46, "Grup": "Asam Kuat", "Sifat": "Asam mineral kuat, berasap pada konsentrasi pekat.", "Bahaya": "Sangat Korosif, iritasi saluran pernapasan.", "Warna": "#EF4444"},
+        "Asam Sulfat (H2SO4)": {"Formula": "H2SO4", "Mr": 98.08, "Grup": "Asam Kuat", "Sifat": "Asam kuat kental, dehidrator berat, eksotermik tinggi.", "Bahaya": "Sangat korosif, destruktif pada jaringan kulit.", "Warna": "#EF4444"},
+        "Asam Nitrat (HNO3)": {"Formula": "HNO3", "Mr": 63.01, "Grup": "Asam Kuat", "Sifat": "Asam kuat pengoksidasi, agen nitrasi.", "Bahaya": "Korosif berat, oksidator kuat.", "Warna": "#EF4444"},
+        "Asam Asetat (CH3COOH)": {"Formula": "CH3COOH", "Mr": 60.05, "Grup": "Asam Lemah", "Sifat": "Asam organik lemah, berbau menyengat (cuka glasial).", "Bahaya": "Korosif pada kadar tinggi, cairan mudah terbakar.", "Warna": "#F59E0B"},
+        "Asam Oksalat (H2C2O4)": {"Formula": "H2C2O4", "Mr": 90.03, "Grup": "Asam Lemah", "Sifat": "Asam organik lemah, standar primer titrasi alkalimetri.", "Bahaya": "Berbahaya jika terkena kulit, toksik.", "Warna": "#F59E0B"},
+        "Asam Fosfat (H3PO4)": {"Formula": "H3PO4", "Mr": 98.00, "Grup": "Asam Lemah", "Sifat": "Asam triprotik sedang, digunakan dalam pembuatan buffer.", "Bahaya": "Korosif, menyebabkan iritasi mata berat.", "Warna": "#EF4444"},
+        "Asam Sitrat (C6H8O7)": {"Formula": "C6H8O7", "Mr": 192.12, "Grup": "Asam Lemah", "Sifat": "Asam organik lemah, kristal tidak berwarna, rasa masam.", "Bahaya": "Iritan ringan pada mata.", "Warna": "#F59E0B"},
         
         # --- KELOMPOK BASA ---
-        "Natrium Hidroksida (NaOH)": {"Formula": "NaOH", "Mr": 40.00, "Sifat": "Basa kuat, padatan pelet putih, higroskopis.", "Bahaya": "Korosif berat, menyebabkan luka bakar parah.", "Warna": "#EF4444"},
-        "Kalium Hidroksida (KOH)": {"Formula": "KOH", "Mr": 56.11, "Sifat": "Basa kuat, kaustik, melepaskan panas saat larut.", "Bahaya": "Sangat korosif, toksisitas akut.", "Warna": "#EF4444"},
-        "Amonia (NH4OH)": {"Formula": "NH4OH", "Mr": 35.05, "Sifat": "Basa lemah, larutan gas amonia dalam air, bau menyengat.", "Bahaya": "Korosif, sangat toksik bagi organisme air.", "Warna": "#EF4444"},
+        "Natrium Hidroksida (NaOH)": {"Formula": "NaOH", "Mr": 40.00, "Grup": "Basa Kuat", "Sifat": "Basa kuat, padatan pelet putih, higroskopis.", "Bahaya": "Korosif berat, menyebabkan luka bakar parah.", "Warna": "#EF4444"},
+        "Kalium Hidroksida (KOH)": {"Formula": "KOH", "Mr": 56.11, "Grup": "Basa Kuat", "Sifat": "Basa kuat, kaustik, melepaskan panas saat larut.", "Bahaya": "Sangat korosif, toksisitas akut.", "Warna": "#EF4444"},
+        "Amonia (NH4OH)": {"Formula": "NH4OH", "Mr": 35.05, "Grup": "Basa Lemah", "Sifat": "Basa lemah, larutan gas amonia dalam air, bau tajam.", "Bahaya": "Korosif, sangat toksik bagi organisme air.", "Warna": "#EF4444"},
+        "Kalsium Hidroksida (Ca(OH)2)": {"Formula": "Ca(OH)2", "Mr": 74.09, "Grup": "Basa Kuat", "Sifat": "Serbuk putih, larut sebagian dalam air (air kapur).", "Bahaya": "Menyebabkan kerusakan mata berat, iritasi kulit.", "Warna": "#EF4444"},
         
-        # --- KELOMPOK GARAM & INDIKATOR ---
-        "Natrium Klorida (NaCl)": {"Formula": "NaCl", "Mr": 58.44, "Sifat": "Garam halida standar, padatan kristal putih.", "Bahaya": "Aman pada penggunaan normal laboratorium.", "Warna": "#10B981"},
-        "Tembaga(II) Sulfat (CuSO4)": {"Formula": "CuSO4", "Mr": 159.61, "Sifat": "Garam anorganik, berwarna biru cerah (bentuk hidrat).", "Bahaya": "Toksik bagi lingkungan akuatik, iritan kuat.", "Warna": "#EF4444"},
-        "Kalsium Karbonat (CaCO3)": {"Formula": "CaCO3", "Mr": 100.09, "Sifat": "Kapur, padatan serbuk putih, sukar larut air.", "Bahaya": "Aman / Risiko iritasi sangat rendah.", "Warna": "#10B981"},
-        "Kalium Permanganat (KMnO4)": {"Formula": "KMnO4", "Mr": 158.03, "Sifat": "Garam mangan, kristal ungu gelap, agen titrasi redoks.", "Bahaya": "Oksidator kuat, korosif, toksik.", "Warna": "#EF4444"}
+        # --- KELOMPOK REAGEN, GARAM, & INDIKATOR ---
+        "Natrium Klorida (NaCl)": {"Formula": "NaCl", "Mr": 58.44, "Grup": "Garam", "Sifat": "Garam halida standar, padatan kristal putih.", "Bahaya": "Aman pada penggunaan normal laboratorium.", "Warna": "#10B981"},
+        "Tembaga(II) Sulfat (CuSO4)": {"Formula": "CuSO4", "Mr": 159.61, "Grup": "Garam / Reagen", "Sifat": "Garam anorganik, berwarna biru cerah (hidrat).", "Bahaya": "Toksik bagi lingkungan akuatik, iritan kuat.", "Warna": "#EF4444"},
+        "Kalsium Karbonat (CaCO3)": {"Formula": "CaCO3", "Mr": 100.09, "Grup": "Garam", "Sifat": "Kapur, padatan serbuk putih, sukar larut air.", "Bahaya": "Aman / Risiko iritasi sangat rendah.", "Warna": "#10B981"},
+        "Kalium Permanganat (KMnO4)": {"Formula": "KMnO4", "Mr": 158.03, "Grup": "Oksidator / Reagen", "Sifat": "Garam mangan, kristal ungu gelap, indikator auto-redoks.", "Bahaya": "Oksidator kuat, korosif, toksik.", "Warna": "#EF4444"},
+        "Barium Klorida (BaCl2)": {"Formula": "BaCl2", "Mr": 208.23, "Grup": "Garam / Reagen", "Sifat": "Garam anorganik, digunakan untuk uji ion sulfat.", "Bahaya": "Sangat toksik jika tertelan atau terhirup.", "Warna": "#EF4444"},
+        "Agno3 (Perak Nitrat)": {"Formula": "AgNO3", "Mr": 169.87, "Grup": "Garam / Reagen", "Sifat": "Senyawa perak, peka cahaya, reagen uji klorida.", "Bahaya": "Oksidator, sangat korosif, merusak lingkungan.", "Warna": "#EF4444"},
+        "Amonium Nitrat (NH4NO3)": {"Formula": "NH4NO3", "Mr": 80.04, "Grup": "Garam / Oksidator", "Sifat": "Garam kristal putih, larut air, komponen pupuk/peledak.", "Bahaya": "Oksidator kuat, risiko meledak jika dipanaskan.", "Warna": "#EF4444"},
+        "Natrium Karbonat (Na2CO3)": {"Formula": "Na2CO3", "Mr": 105.99, "Grup": "Garam", "Sifat": "Soda abu, bubuk putih, larut air membentuk basa lemah.", "Bahaya": "Menyebabkan iritasi mata berat.", "Warna": "#F59E0B"},
+        "Natrium Bikarbonat (NaHCO3)": {"Formula": "NaHCO3", "Mr": 84.01, "Grup": "Garam", "Sifat": "Baking soda, bubuk kristal putih, sebagai buffer pH.", "Bahaya": "Aman / Risiko iritasi sangat rendah.", "Warna": "#10B981"},
+        "Glukosa (C6H12O6)": {"Formula": "C6H12O6", "Mr": 180.16, "Grup": "Karbohidrat", "Sifat": "Gula sederhana, bubuk putih manis, agen pereduksi.", "Bahaya": "Aman / Non-Hazardous", "Warna": "#10B981"},
+        "Yodium / Iodium (I2)": {"Formula": "I2", "Mr": 253.81, "Grup": "Halogen / Reagen", "Sifat": "Padatan ungu tua kehitaman, menyublim menghasilkan gas ungu.", "Bahaya": "Berbahaya jika tertelan/terkena kulit, toksik.", "Warna": "#EF4444"},
+        "Fenolftalein / Indikator PP": {"Formula": "C20H14O4", "Mr": 318.32, "Grup": "Indikator pH", "Sifat": "Bubuk putih, indikator titrasi (tak berwarna ke merah muda).", "Bahaya": "Dapat memicu kanker (Karsinogenik).", "Warna": "#EF4444"},
+        "Metil Jingga / Methyl Orange": {"Formula": "C14H14N3NaO3S", "Mr": 327.33, "Grup": "Indikator pH", "Sifat": "Bubuk jingga, indikator asam-basa (merah ke kuning).", "Bahaya": "Toksik jika tertelan.", "Warna": "#EF4444"}
     }
     
-    # Kolom Input Pencarian dengan Fitur Autocomplete Otomatis
+    # Filter grup kategori bahan kimia
+    kategori_grup = ["Semua Kelompok"] + sorted(list(set([info['Grup'] for info in data_bahan.values()])))
+    grup_terpilih = st.selectbox("📂 Filter Berdasarkan Kelompok Bahan:", kategori_grup)
+    
+    # Kolom Input Pencarian dengan Fitur Autocomplete
     cari_bahan = st.text_input("🔍 Ketik Nama Bahan Kimia untuk Mencari:", "")
     
-    # Logika Python List Comprehension untuk filter pencarian
-    list_bahan = [b for b in data_bahan.keys() if cari_bahan.lower() in b.lower()]
-    
+    # Filter ganda: Kategori + Teks Pencarian
+    list_bahan = []
+    for b, info in data_bahan.items():
+        match_grup = (grup_terpilih == "Semua Kelompok") or (info['Grup'] == grup_terpilih)
+        match_nama = cari_bahan.lower() in b.lower()
+        if match_grup and match_nama:
+            list_bahan.append(b)
+            
     if list_bahan:
-        pilihan_bahan = st.selectbox("Pilih Bahan Kimia dari Hasil Pencarian:", list_bahan)
+        pilihan_bahan = st.selectbox("Pilih Bahan Kimia dari Hasil Filter:", list_bahan)
         info = data_bahan[pilihan_bahan]
         
         st.markdown("---")
@@ -194,7 +217,8 @@ elif menu_utama == "📦 Inventaris Bahan Lab":
         st.markdown(f"""
         <div style='background-color: #F8FAFC; padding: 25px; border-radius: 12px; border-left: 8px solid {info['Warna']}; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);'>
             <h3 style='margin-top:0px; color:#1E293B;'>🔬 {pilihan_bahan}</h3>
-            <p style='margin-bottom:8px;'><b>Rumus Kimia:</b> <code style='font-size:16px; background-color:#E2E8F0; padding:2px 6px; border-radius:4px;'>{info['Formula']}</code></p>
+            <span style='background-color:#E2E8F0; color:#334155; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:bold; display:inline-block; margin-bottom:15px;'>🏷️ Kelompok: {info['Grup']}</span>
+            <p style='margin-bottom:8px;'><b>Rumus Kimia:</b> <code style='font-size:16px; background-color:#F1F5F9; padding:2px 6px; border-radius:4px;'>{info['Formula']}</code></p>
             <p style='margin-bottom:8px;'><b>Massa Molar (Mr):</b> <span style='color:#1E3A8A; font-weight:bold;'>{info['Mr']} g/mol</span></p>
             <p style='margin-bottom:8px;'><b>Karakteristik Fisik & Sifat:</b> {info['Sifat']}</p>
             <hr style='border-color:#E2E8F0; margin: 15px 0;'>
@@ -203,4 +227,4 @@ elif menu_utama == "📦 Inventaris Bahan Lab":
         </div>
         """, unsafe_allow_html=True)
     else:
-        st.error("Bahan kimia tidak terdaftar di database. Periksa kembali ejaan Anda.")
+        st.error("Bahan kimia tidak ditemukan berdasarkan filter atau pencarian Anda.")
