@@ -3,7 +3,7 @@ import math
 
 # --- KONFIGURASI TAMPILAN ---
 st.set_page_config(
-    page_title="ChemAssist Dashboard Pro", 
+    page_title="Asisten Lab Dashboard ", 
     page_icon="🧪", 
     layout="wide", 
     initial_sidebar_state="expanded"
@@ -22,13 +22,13 @@ with st.sidebar:
     st.markdown("## ⚙️ Pusat Kontrol Lab")
     menu_utama = st.radio(
         "Pilih Menu Aplikasi:",
-        ["💧 Pembuatan & Pengenceran", "🧬 Kalkulator pH Pro", "📦 Inventaris Bahan Lab"]
+        ["💧 Pembuatan & Pengenceran", "🧬 Kalkulator pH ", "📦 Inventaris Bahan Lab"]
     )
     st.markdown("---")
     st.info("Aplikasi Tugas Akhir Logika & Pemrograman Komputer.")
 
 # --- HEADER UTAMA ---
-st.markdown("<div class='main-title'>🧪 ChemAssist Dashboard Pro</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>🧪 Asisten Lab Dashboard </div>", unsafe_allow_html=True)
 st.markdown("<div class='subtitle'>Sistem Analisis Parameter Laboratorium Kimia Interaktif</div>", unsafe_allow_html=True)
 # =========================================================================
 # MENU 1: KALKULATOR LARUTAN MULTI-SATUAN
@@ -103,9 +103,9 @@ if menu_utama == "💧 Pembuatan & Pengenceran":
                         st.metric(label="Volume Stok Diambil (V1)", value=f"{v1:.2f} mL")
                         st.success(f"Ambil {v1:.2f} mL larutan pekat, encerkan hingga {v2:.0f} mL.")
 # =========================================================================
-# MENU 2: KALKULATOR pH LENGKAP
+# MENU 2: KALKULATOR pH 
 # =========================================================================
-elif menu_utama == "🧬 Kalkulator pH Pro":
+elif menu_utama == "🧬 Kalkulator pH ":
     st.markdown("### 🧬 Simulator & Kalkulator pH Larutan Tingkat Lanjut")
     col1, col2 = st.columns(2, gap="large")
     
