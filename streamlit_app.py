@@ -160,7 +160,7 @@ elif menu_utama == "📦 Inventaris Bahan Lab":
         "Natrium Klorida (NaCl)": {"Formula": "NaCl", "Mr": 58.44, "Sifat": "Garam dapur, padatan kristal putih.", "Bahaya": "Aman pada konsentrasi normal.", "Status": "Aman"},
         "Aseton (CH3COCH3)": {"Formula": "CH3COCH3", "Mr": 58.08, "Sifat": "Pelarut organik polar, sangat mudah menguap.", "Bahaya": "Sangat mudah terbakar, iritasi mata.", "Status": "Bahaya"},
         "Tembaga(II) Sulfat (CuSO4)": {"Formula": "CuSO4", "Mr": 159.61, "Sifat": "Garam anorganik, umumnya berwarna biru (hidrat).", "Bahaya": "Toksik bagi lingkungan akuatik, berbahaya jika tertelan.", "Status": "Bahaya"},
-    }
+        }
     cari_bahan = st.text_input("🔍 Cari Nama Bahan Kimia:", "")
     list_bahan = [b for b in data_bahan.keys() if cari_bahan.lower() in b.lower()]
     
