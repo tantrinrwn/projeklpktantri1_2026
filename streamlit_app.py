@@ -151,11 +151,15 @@ elif menu_utama == "🧬 Kalkulator pH ":
 elif menu_utama == "📦 Inventaris Bahan Lab":
     st.markdown("### 📦 Manajemen Informasi & Inventaris Bahan Laboratorium")
     data_bahan = {
-        "Akuades (H2O)": {"Formula": "H2O", "Mr": 18.02, "Sifat": "Pelarut universal.", "Bahaya": "Aman", "Warna": "#10B981"},
-        "Asam Klorida (HCl)": {"Formula": "HCl", "Mr": 36.46, "Sifat": "Asam kuat beruap.", "Bahaya": "Korosif", "Warna": "#EF4444"},
-        "Natrium Hidroksida (NaOH)": {"Formula": "NaOH", "Mr": 40.00, "Sifat": "Basa kuat padat.", "Bahaya": "Korosif berat", "Warna": "#EF4444"},
-        "Etanol (C2H5OH)": {"Formula": "C2H5OH", "Mr": 46.07, "Sifat": "Pelarut organik volatil.", "Bahaya": "Mudah terbakar", "Warna": "#F59E0B"},
-        "Asam Sulfat (H2SO4)": {"Formula": "H2SO4", "Mr": 98.08, "Sifat": "Asam kuat eksotermik.", "Bahaya": "Sangat korosif", "Warna": "#EF4444"}
+        "Akuades (H2O)": {"Formula": "H2O", "Mr": 18.02, "Sifat": "Pelarut universal, netral.", "Bahaya": "Aman / Non-Hazardous", "Status": "Aman"},
+        "Asam Klorida (HCl)": {"Formula": "HCl", "Mr": 36.46, "Sifat": "Asam kuat, cairan beruap cair.", "Bahaya": "Korosif, iritasi saluran pernapasan.", "Status": "Bahaya"},
+        "Natrium Hidroksida (NaOH)": {"Formula": "NaOH", "Mr": 40.00, "Sifat": "Basa kuat, padatan pelet putih, higroskopis.", "Bahaya": "Korosif berat, menyebabkan luka bakar parah.", "Status": "Bahaya"},
+        "Etanol (C2H5OH)": {"Formula": "C2H5OH", "Mr": 46.07, "Sifat": "Pelarut organik, mudah menguap.", "Bahaya": "Cairan mudah terbakar (Flammable).", "Status": "Bahaya"},
+        "Asam Asetat (CH3COOH)": {"Formula": "CH3COOH", "Mr": 60.05, "Sifat": "Asam lemah, berbau menyengat tajam (cuka).", "Bahaya": "Korosif pada konsentrasi pekat, cairan mudah terbakar.", "Status": "Bahaya"},
+        "Asam Sulfat (H2SO4)": {"Formula": "H2SO4", "Mr": 98.08, "Sifat": "Asam kuat bervalensi 2, cairan kental berenergi eksotermik tinggi.", "Bahaya": "Sangat korosif, destruktif pada jaringan kulit.", "Status": "Bahaya"},
+        "Natrium Klorida (NaCl)": {"Formula": "NaCl", "Mr": 58.44, "Sifat": "Garam dapur, padatan kristal putih.", "Bahaya": "Aman pada konsentrasi normal.", "Status": "Aman"},
+        "Aseton (CH3COCH3)": {"Formula": "CH3COCH3", "Mr": 58.08, "Sifat": "Pelarut organik polar, sangat mudah menguap.", "Bahaya": "Sangat mudah terbakar, iritasi mata.", "Status": "Bahaya"},
+        "Tembaga(II) Sulfat (CuSO4)": {"Formula": "CuSO4", "Mr": 159.61, "Sifat": "Garam anorganik, umumnya berwarna biru (hidrat).", "Bahaya": "Toksik bagi lingkungan akuatik, berbahaya jika tertelan.", "Status": "Bahaya"},
     }
     cari_bahan = st.text_input("🔍 Cari Nama Bahan Kimia:", "")
     list_bahan = [b for b in data_bahan.keys() if cari_bahan.lower() in b.lower()]
