@@ -58,7 +58,7 @@ if menu_utama == "💧 Pembuatan & Pengenceran":
                     with col_out:
                         st.subheader("📤 Hasil Analisis")
                         st.metric(label="Massa Harus Ditimbang", value=f"{massa:.4f} gram")
-                        st.success(f"Timbang {massa:.4f} g zat, larutkan dalam labu takar {volume_ml:.0f} mL.")
+                        st.success(f"Timbang {massa:.4f} g zat, larutkan dalam labu takar {volume_ml:.0f} mL, homogenkan larutan.")
             
             elif opsi_satuan == "Normalitas (N)":
                 c_n = st.number_input("Konsentrasi Normalitas (N):", min_value=0.0001, value=0.1000, format="%.4f")
@@ -68,7 +68,7 @@ if menu_utama == "💧 Pembuatan & Pengenceran":
                     with col_out:
                         st.subheader("📤 Hasil Analisis")
                         st.metric(label="Massa Harus Ditimbang", value=f"{massa:.4f} gram")
-                        st.success(f"Timbang {massa:.4f} g zat, encerkan hingga {volume_ml:.0f} mL.")
+                        st.success(f"Timbang {massa:.4f} g zat, encerkan hingga {volume_ml:.0f} mL, homogenkan larutan.")
                         
             elif opsi_satuan == "ppm (mg/L)":
                 c_ppm = st.number_input("Konsentrasi ppm (mg/L):", min_value=0.1, value=100.0)
