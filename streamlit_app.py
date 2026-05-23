@@ -14,130 +14,271 @@ st.set_page_config(
 )
 
 # =========================================================
-# CUSTOM CSS ULTRA MODERN
+# CSS BARU — TEMA LAB KIMIA BIRU CERAH
 # =========================================================
 st.markdown("""
 <style>
 
-/* Background */
+/* Background utama */
 .stApp {
-    background: linear-gradient(135deg, #0F172A, #1E293B, #312E81);
+    background: linear-gradient(
+        135deg,
+        #38BDF8,
+        #0EA5E9,
+        #2563EB,
+        #1E3A8A
+    );
+
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    color: white;
 }
 
-/* Gradient Animation */
+/* Animasi background */
 @keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: rgba(15,23,42,0.88);
-    backdrop-filter: blur(18px);
-    border-right: 1px solid rgba(255,255,255,0.1);
+
+    background: rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(14px);
+
+    border-right: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Title */
+/* Semua teks */
+html, body, [class*="css"] {
+
+    color: white !important;
+}
+
+/* Judul utama */
 .main-title {
-    font-size: 56px;
+
+    font-size: 58px;
+
     font-weight: 900;
+
     text-align: center;
-    background: linear-gradient(to right, #38BDF8, #A78BFA);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    color: white;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.8),
+        0 0 20px rgba(255,255,255,0.5);
+
     animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Glow title */
+@keyframes glow {
+
+    from {
+        text-shadow:
+            0 0 10px rgba(255,255,255,0.7);
+    }
+
+    to {
+        text-shadow:
+            0 0 25px rgba(255,255,255,1);
+    }
 }
 
 /* Subtitle */
 .subtitle {
-    text-align:center;
-    color:#CBD5E1;
-    font-size:18px;
-    margin-bottom:30px;
-}
 
-/* Glow */
-@keyframes glow {
-    from {text-shadow:0 0 10px #38BDF8;}
-    to {text-shadow:0 0 25px #A78BFA;}
+    text-align: center;
+
+    font-size: 18px;
+
+    color: #E0F2FE;
+
+    margin-bottom: 35px;
 }
 
 /* Logo */
 .logo-container {
-    text-align:center;
+
+    text-align: center;
+
+    margin-bottom: 10px;
 }
 
 .logo-spin {
-    font-size:85px;
-    display:inline-block;
-    animation:spin 6s linear infinite;
+
+    font-size: 80px;
+
+    display: inline-block;
+
+    animation: spin 6s linear infinite;
 }
 
 @keyframes spin {
-    100% {transform: rotate(360deg);}
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-/* Button */
-.stButton > button {
-    background: linear-gradient(90deg,#3B82F6,#8B5CF6);
-    color:white;
-    border:none;
-    border-radius:14px;
-    padding:12px 18px;
-    font-weight:bold;
-    transition:0.3s;
-    box-shadow:0 4px 20px rgba(59,130,246,0.4);
-}
-
-.stButton > button:hover {
-    transform:scale(1.05);
-}
-
-/* Metric Card */
+/* Card metric */
 [data-testid="stMetric"] {
-    background: rgba(255,255,255,0.08);
-    border-radius:18px;
-    padding:15px;
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,0.08);
+
+    background: rgba(255,255,255,0.18);
+
+    border-radius: 20px;
+
+    padding: 18px;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Inputs */
+/* Tombol */
+.stButton > button {
+
+    background: linear-gradient(
+        90deg,
+        #2563EB,
+        #38BDF8
+    );
+
+    color: white;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 18px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+
+    box-shadow: 0 4px 20px rgba(255,255,255,0.25);
+}
+
+/* Hover tombol */
+.stButton > button:hover {
+
+    transform: scale(1.05);
+
+    background: linear-gradient(
+        90deg,
+        #1D4ED8,
+        #0EA5E9
+    );
+}
+
+/* Input box */
 .stTextInput input,
 .stNumberInput input {
-    background-color: rgba(255,255,255,0.08) !important;
-    color:white !important;
-    border-radius:12px !important;
+
+    background-color: rgba(255,255,255,0.18) !important;
+
+    color: white !important;
+
+    border-radius: 12px !important;
+
+    border: 1px solid rgba(255,255,255,0.25) !important;
 }
 
 /* Selectbox */
 .stSelectbox div[data-baseweb="select"] {
-    background-color: rgba(255,255,255,0.08) !important;
-    border-radius:12px !important;
+
+    background-color: rgba(255,255,255,0.18) !important;
+
+    border-radius: 12px !important;
+
+    color: white !important;
 }
 
-/* Floating Molecules */
+/* Radio */
+.stRadio label {
+
+    color: white !important;
+}
+
+/* Progress bar */
+.stProgress > div > div > div {
+
+    background: linear-gradient(
+        90deg,
+        #FFFFFF,
+        #BAE6FD
+    );
+}
+
+/* Inventaris card */
+.info-card {
+
+    background: rgba(255,255,255,0.16);
+
+    padding: 25px;
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Molekul animasi */
 .molecule {
+
     position: fixed;
-    width: 12px;
-    height: 12px;
-    background: #38BDF8;
+
+    width: 14px;
+
+    height: 14px;
+
+    background: rgba(255,255,255,0.5);
+
     border-radius: 50%;
-    opacity:0.3;
+
     animation: float 12s infinite linear;
 }
 
-.molecule:nth-child(1){left:10%;}
-.molecule:nth-child(2){left:50%;}
-.molecule:nth-child(3){left:80%;}
+/* Posisi molecule */
+.molecule:nth-child(1) {
+    left: 10%;
+}
 
+.molecule:nth-child(2) {
+    left: 50%;
+}
+
+.molecule:nth-child(3) {
+    left: 80%;
+}
+
+/* Animasi molecule */
 @keyframes float {
-    0% {transform:translateY(100vh);}
-    100% {transform:translateY(-100vh);}
+
+    0% {
+        transform: translateY(100vh);
+    }
+
+    100% {
+        transform: translateY(-100vh);
+    }
 }
 
 </style>
@@ -147,7 +288,6 @@ section[data-testid="stSidebar"] {
 <div class="molecule"></div>
 
 """, unsafe_allow_html=True)
-
 # =========================================================
 # SIDEBAR
 # =========================================================
@@ -187,11 +327,12 @@ with st.sidebar:
             st.info("Database AI mini belum punya jawaban 😭")
 
 # =========================================================
-# HEADER
+# HEADER BARU
 # =========================================================
 st.markdown("""
+
 <div class="logo-container">
-<div class="logo-spin">🧪</div>
+    <div class="logo-spin">🧪</div>
 </div>
 
 <div class="main-title">
@@ -201,8 +342,8 @@ Asisten Lab Dashboard
 <div class="subtitle">
 Sistem Analisis Parameter Laboratorium Kimia Interaktif
 </div>
-""", unsafe_allow_html=True)
 
+""", unsafe_allow_html=True)
 # =========================================================
 # FUNGSI
 # =========================================================
