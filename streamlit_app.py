@@ -1,7 +1,5 @@
 import streamlit as st
 import math
-import pandas as pd
-from datetime import datetime
 from streamlit_option_menu import option_menu
 
 # =========================================================
@@ -15,17 +13,10 @@ st.set_page_config(
 )
 
 # =========================================================
-# CSS MODERN BIRU CERAH
+# CSS MODERN
 # =========================================================
 st.markdown("""
 <style>
-.sidebar-content {
-    color: white !important;
-}
-
-div[data-testid="stSidebarNav"] * {
-    color: white !important;
-}
 
 /* Background utama */
 .stApp {
@@ -60,7 +51,7 @@ div[data-testid="stSidebarNav"] * {
 /* Sidebar */
 section[data-testid="stSidebar"] {
 
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.15);
 
     backdrop-filter: blur(16px);
 
@@ -69,11 +60,10 @@ section[data-testid="stSidebar"] {
 
 /* Semua teks */
 html, body, [class*="css"] {
-
     color: white !important;
 }
 
-/* Title */
+/* Header */
 .main-title {
 
     font-size: 58px;
@@ -141,22 +131,6 @@ html, body, [class*="css"] {
     }
 }
 
-/* Card metric */
-[data-testid="stMetric"] {
-
-    background: rgba(255,255,255,0.18);
-
-    border-radius: 20px;
-
-    padding: 18px;
-
-    backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(255,255,255,0.25);
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
 /* Tombol */
 .stButton > button {
 
@@ -181,19 +155,28 @@ html, body, [class*="css"] {
     box-shadow: 0 4px 20px rgba(255,255,255,0.25);
 }
 
-/* Hover tombol */
 .stButton > button:hover {
 
     transform: scale(1.05);
-
-    background: linear-gradient(
-        90deg,
-        #1D4ED8,
-        #0EA5E9
-    );
 }
 
-/* Input box */
+/* Metric */
+[data-testid="stMetric"] {
+
+    background: rgba(255,255,255,0.18);
+
+    border-radius: 20px;
+
+    padding: 18px;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Input */
 .stTextInput input,
 .stNumberInput input {
 
@@ -213,23 +196,13 @@ html, body, [class*="css"] {
 
     border-radius: 12px !important;
 
-    color: white !important;
-}
-
-/* Progress */
-.stProgress > div > div > div {
-
-    background: linear-gradient(
-        90deg,
-        #FFFFFF,
-        #BAE6FD
-    );
+    color: black !important;
 }
 
 /* Card */
 .info-card {
 
-    background: rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.18);
 
     padding: 25px;
 
@@ -240,6 +213,8 @@ html, body, [class*="css"] {
     border: 1px solid rgba(255,255,255,0.25);
 
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+
+    color: white;
 }
 
 /* Molekul */
@@ -309,7 +284,7 @@ Sistem Analisis Parameter Laboratorium Kimia Interaktif
 """, unsafe_allow_html=True)
 
 # =========================================================
-# SIDEBAR MODERN
+# SIDEBAR
 # =========================================================
 with st.sidebar:
 
@@ -339,33 +314,56 @@ with st.sidebar:
         styles={
 
             "container": {
-                "padding": "10px",
-                "background-color": "rgba(255,255,255,0.08)",
-                "border-radius": "20px"
+                "padding": "12px",
+                "background-color": "rgba(255,255,255,0.12)",
+                "border-radius": "20px",
             },
 
             "icon": {
-                "color": "#E0F2FE",
+                "color": "#0F172A",
                 "font-size": "22px"
             },
 
-         "nav-link": {
-            "font-size": "18px",
-            "text-align": "left",
-            "margin": "8px",
-            "border-radius": "14px",
-            "color": "#FFFFFF",
-            "--hover-color": "rgba(255,255,255,0.18)",
+            "menu-title": {
+                "color": "#0F172A",
+                "font-size": "28px",
+                "font-weight": "bold",
             },
-            
-         "nav-link-selected": {
-            "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-            "color": "#FFFFFF",
-            "font-weight": "bold",
-            "box-shadow": "0 4px 15px rgba(255,255,255,0.3)"
-            },  
+
+            "nav-link": {
+
+                "font-size": "20px",
+
+                "text-align": "left",
+
+                "margin": "10px",
+
+                "padding": "14px",
+
+                "border-radius": "16px",
+
+                "background-color": "rgba(255,255,255,0.35)",
+
+                "color": "#0F172A",
+
+                "font-weight": "600",
+
+                "--hover-color": "rgba(255,255,255,0.55)",
+            },
+
+            "nav-link-selected": {
+
+                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+
+                "color": "#FFFFFF",
+
+                "font-weight": "bold",
+
+                "box-shadow": "0 4px 15px rgba(37,99,235,0.45)"
+            },
         }
     )
+
 # =========================================================
 # HOME
 # =========================================================
