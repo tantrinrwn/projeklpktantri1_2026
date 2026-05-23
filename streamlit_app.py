@@ -19,6 +19,13 @@ st.set_page_config(
 # =========================================================
 st.markdown("""
 <style>
+.sidebar-content {
+    color: white !important;
+}
+
+div[data-testid="stSidebarNav"] * {
+    color: white !important;
+}
 
 /* Background utama */
 .stApp {
@@ -342,21 +349,21 @@ with st.sidebar:
                 "font-size": "22px"
             },
 
-            "nav-link": {
-                "font-size": "18px",
-                "text-align": "left",
-                "margin": "8px",
-                "border-radius": "14px",
-                "color": "white",
+         "nav-link": {
+            "font-size": "18px",
+            "text-align": "left",
+            "margin": "8px",
+            "border-radius": "14px",
+            "color": "#FFFFFF",
+            "--hover-color": "rgba(255,255,255,0.18)",
             },
-
-            "nav-link-selected": {
-                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-                "color": "white",
-                "font-weight": "bold",
-                "box-shadow": "0 4px 15px rgba(255,255,255,0.3)"
-            },
-        }
+            
+         "nav-link-selected": {
+            "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+            "color": "#FFFFFF",
+            "font-weight": "bold",
+            "box-shadow": "0 4px 15px rgba(255,255,255,0.3)"
+            },  
     )
 
 # =========================================================
