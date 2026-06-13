@@ -780,7 +780,7 @@ if menu=="🏠 Home":
         if st.button("📖 Informasi Kimia"):
             go_to("📚 Informasi Bahan Kimia")
 
-         st.markdown("""
+        st.markdown("""
         <div class='card'>
             <div class='feature-title'>📚 Chemical Database</div>
             <div class='feature-desc'>
