@@ -1011,8 +1011,8 @@ C = st.number_input(
     value=0.01
 )
 
-        if st.button("Hitung pH"):
-        with st.spinner("Sedang menghitung..."):
+    if st.button("Hitung pH"):
+    with st.spinner("Sedang menghitung..."):
             time.sleep(5)
 
         if "Asam kuat" in info["jenis"]:
