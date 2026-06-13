@@ -556,10 +556,10 @@ with st.sidebar:
 
 st.session_state.dark_mode = dark_mode
 
-    if dark_mode:
-        sidebar_bg = "#0F172A"
-        nav_bg = "#1E293B"
-        nav_text = "white"
+if dark_mode:
+    sidebar_bg = "#0F172A"
+    nav_bg = "#1E293B"
+    nav_text = "white"
     else:
         sidebar_bg = "#E0F2FE"
         nav_bg = "#FFFFFF"
