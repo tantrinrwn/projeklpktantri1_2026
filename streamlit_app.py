@@ -1011,7 +1011,7 @@ C = st.number_input(
     value=0.01
 )
 
-    if st.button("Hitung pH"):
+if st.button("Hitung pH"):
     with st.spinner("Sedang menghitung..."):
             time.sleep(5)
 
