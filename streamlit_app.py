@@ -629,12 +629,11 @@ selected = option_menu(
          },
      }
   )
-
-     if st.button("🚪 Logout"):
-        st.session_state.login = False
-        st.session_state.username = ""
-        st.session_state.nama = ""
-        st.rerun()
+if st.button("🚪 Logout"):
+    st.session_state.login = False
+    st.session_state.username = ""
+    st.session_state.nama = ""
+    st.rerun()
 # ================= DARK MODE =================
 
 if dark_mode:
