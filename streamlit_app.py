@@ -872,14 +872,14 @@ elif menu=="💧 Larutan":
         M = st.number_input("Konsentrasi Larutan (M)", 0.1)
         V = st.number_input("Volume Larutan (mL)", 100.0)
 
-          if hitung:
+        if hitung:
 
-            with st.spinner("Sedang menghitung..."):
+        with st.spinner("Sedang menghitung..."):
                 time.sleep(3)
 
-            massa = (info['Mr'] * M * V) / 1000
+         massa = (info['Mr'] * M * V) / 1000
 
-            st.success(f"""
+        st.success(f"""
 ✅ Massa senyawa yang diperlukan:
 {massa:.4f} gram
 """)
