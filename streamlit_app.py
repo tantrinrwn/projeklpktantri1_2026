@@ -877,7 +877,7 @@ elif menu=="💧 Larutan":
             with st.spinner("Sedang menghitung..."):
                 time.sleep(3)
 
-             massa = (info['Mr'] * M * V) / 1000
+                 massa = (info['Mr'] * M * V) / 1000
 
         st.success(f"""
 ✅ Massa senyawa yang diperlukan:
