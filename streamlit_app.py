@@ -1015,48 +1015,48 @@ if st.button("Hitung pH"):
     with st.spinner("Sedang menghitung..."):
             time.sleep(5)
 
-        if "Asam kuat" in info["jenis"]:
+    if "Asam kuat" in info["jenis"]:
 
-            ph=-math.log10(C*info["valensi"])
+        ph=-math.log10(C*info["valensi"])
 
-        elif "Basa kuat" in info["jenis"]:
+    elif "Basa kuat" in info["jenis"]:
 
-            poh=-math.log10(C*info["valensi"])
-            ph=14-poh
+        poh=-math.log10(C*info["valensi"])
+        ph=14-poh
 
-        elif "Asam lemah" in info["jenis"]:
+    elif "Asam lemah" in info["jenis"]:
 
-            H=math.sqrt(info["Ka"]*C)
-            ph=-math.log10(H)
+        H=math.sqrt(info["Ka"]*C)
+        ph=-math.log10(H)
 
-        else:
+    else:
 
-            OH=math.sqrt(info["Kb"]*C)
-            poh=-math.log10(OH)
-            ph=14-poh
+        OH=math.sqrt(info["Kb"]*C)
+        poh=-math.log10(OH)
+        ph=14-poh
 
-        st.metric("📊 Nilai pH",f"{ph:.2f}")
+    st.metric("📊 Nilai pH",f"{ph:.2f}")
 
-        if ph <= 1:
-            st.error("🔴 Sangat Asam")
+    if ph <= 1:
+        st.error("🔴 Sangat Asam")
 
-        elif ph <= 3:
-            st.warning("🟠 Asam")
+    elif ph <= 3:
+        st.warning("🟠 Asam")
 
-        elif ph <= 6:
-            st.info("🟡 Asam Lemah")
+    elif ph <= 6:
+        st.info("🟡 Asam Lemah")
 
-        elif ph == 7:
-            st.success("🟢 Netral")
+    elif ph == 7:
+        st.success("🟢 Netral")
 
-        elif ph <= 11:
-            st.info("🔵 Basa Lemah")
+    elif ph <= 11:
+        st.info("🔵 Basa Lemah")
 
-        elif ph <= 13:
-            st.warning("🟣 Basa")
+    elif ph <= 13:
+        st.warning("🟣 Basa")
 
-        else:
-            st.error("⚫ Sangat Basa")
+    else:
+        st.error("⚫ Sangat Basa")
 
 # ================= INFORMASI BAHAN =================
 
