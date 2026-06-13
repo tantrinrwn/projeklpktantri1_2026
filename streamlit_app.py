@@ -1076,9 +1076,9 @@ elif menu=="📚 Informasi Bahan Kimia":
      ] if cari else list(db.keys())
 
 
-    if len(hasil) == 0:
-        st.warning("Data tidak ditemukan")
-        st.stop()
+        if len(hasil) == 0:
+            st.warning("Data tidak ditemukan")
+            st.stop()
 
     pilih = st.selectbox(
         "Pilih Senyawa",
