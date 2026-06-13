@@ -1076,121 +1076,121 @@ elif menu=="📚 Informasi Bahan Kimia":
      ] if cari else list(db.keys())
 
 
-if len(hasil) == 0:
-    st.warning("Data tidak ditemukan")
-    st.stop()
+    if len(hasil) == 0:
+        st.warning("Data tidak ditemukan")
+        st.stop()
 
-pilih = st.selectbox(
-    "Pilih Senyawa",
-    hasil
-)
-data=db[pilih]
+    pilih = st.selectbox(
+        "Pilih Senyawa",
+        hasil
+    )
+    data=db[pilih]
 
-st.markdown(f"""
-<div class='card'>
+    st.markdown(f"""
+    <div class='card'>
 
-<h3>🧪 Informasi Senyawa</h3>
+    <h3>🧪 Informasi Senyawa</h3>
 
-<b>Nama Senyawa:</b> {data[0]}<br><br>
+    <b>Nama Senyawa:</b> {data[0]}<br><br>
 
-<b>Rumus Kimia:</b> {pilih}<br><br>
+    <b>Rumus Kimia:</b> {pilih}<br><br>
 
-<b>Jenis:</b> {data[1]}<br><br>
+    <b>Jenis:</b> {data[1]}<br><br>
 
-<b>Mr:</b> {data[2]}<br><br>
+    <b>Mr:</b> {data[2]}<br><br>
 
-<b>Bahaya:</b> {data[3]}<br><br>
+    <b>Bahaya:</b> {data[3]}<br><br>
 
-<b>Bentuk/Fisik:</b> {data[4]}<br><br>
+    <b>Bentuk/Fisik:</b> {data[4]}<br><br>
 
-<b>Struktur Molekul:</b> {data[5]}
+    <b>Struktur Molekul:</b> {data[5]}
 
-</div>
-""", unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
 # ================= ANALISIS KIMIA =================
-    elif menu=="🧪 Analisis Kimia":
+elif menu=="🧪 Analisis Kimia":
 
-        st.title("🧪 Smart Chemical Analysis")
+    st.title("🧪 Smart Chemical Analysis")
 
-        if st.button("⬅ Kembali ke Home"):
-            go_to("🏠 Home")
+    if st.button("⬅ Kembali ke Home"):
+        go_to("🏠 Home")
 
-        senyawa = st.selectbox(
-            "Pilih Senyawa",
-            list(db.keys())
-        )
+    senyawa = st.selectbox(
+        "Pilih Senyawa",
+        list(db.keys())
+    )
 
-         data = db[senyawa]
+    data = db[senyawa]
 
-        st.markdown(f"""
-        <div class='info-box'>
+    st.markdown(f"""
+    <div class='info-box'>
 
-        <h3>📊 Hasil Analisis Senyawa</h3>
+    <h3>📊 Hasil Analisis Senyawa</h3>
 
-        <b>🧪 Nama :</b> {data[0]}<br><br>
+    <b>🧪 Nama :</b> {data[0]}<br><br>
 
-        <b>📌 Rumus :</b> {senyawa}<br><br>
+    <b>📌 Rumus :</b> {senyawa}<br><br>
 
-        <b>⚗️ Jenis :</b> {data[1]}<br><br>
+    <b>⚗️ Jenis :</b> {data[1]}<br><br>
 
-        <b>⚖️ Mr :</b> {data[2]}<br><br>
+    <b>⚖️ Mr :</b> {data[2]}<br><br>
 
-        <b>⚠️ Bahaya :</b> {data[3]}<br><br>
+    <b>⚠️ Bahaya :</b> {data[3]}<br><br>
 
-        <b>🧬 Struktur :</b> {data[5]}
+    <b>🧬 Struktur :</b> {data[5]}
 
-        </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-        st.subheader("🧪 Interpretasi Kimia")
+    st.subheader("🧪 Interpretasi Kimia")
 
-        jenis = data[1]
+    jenis = data[1]
 
-        if jenis == "Asam kuat":
-            interpretasi = "Asam kuat yang terionisasi hampir sempurna dalam air dan menghasilkan ion H⁺ dalam jumlah besar."
+    if jenis == "Asam kuat":
+        interpretasi = "Asam kuat yang terionisasi hampir sempurna dalam air dan menghasilkan ion H⁺ dalam jumlah besar."
 
-        elif jenis == "Asam lemah":
-            interpretasi = "Asam lemah yang hanya terionisasi sebagian dalam air."
+    elif jenis == "Asam lemah":
+        interpretasi = "Asam lemah yang hanya terionisasi sebagian dalam air."
 
-        elif jenis == "Basa kuat":
-            interpretasi = "Basa kuat yang menghasilkan ion OH⁻ dalam jumlah besar."
+    elif jenis == "Basa kuat":
+        interpretasi = "Basa kuat yang menghasilkan ion OH⁻ dalam jumlah besar."
 
-        elif jenis == "Basa lemah":
-            interpretasi = "Basa lemah yang hanya terionisasi sebagian dalam air."
+    elif jenis == "Basa lemah":
+        interpretasi = "Basa lemah yang hanya terionisasi sebagian dalam air."
 
-        elif "Garam" in jenis:
-            interpretasi = "Senyawa ionik yang tersusun dari kation dan anion."
+    elif "Garam" in jenis:
+        interpretasi = "Senyawa ionik yang tersusun dari kation dan anion."
 
-        elif jenis == "Alkohol":
-            interpretasi = "Mengandung gugus hidroksil (-OH) dan umum digunakan sebagai pelarut."
+    elif jenis == "Alkohol":
+        interpretasi = "Mengandung gugus hidroksil (-OH) dan umum digunakan sebagai pelarut."
 
-        elif jenis == "Keton":
-            interpretasi = "Mengandung gugus karbonil (>C=O)."
+    elif jenis == "Keton":
+        interpretasi = "Mengandung gugus karbonil (>C=O)."
 
-        elif jenis == "Aromatik":
-            interpretasi = "Mengandung cincin aromatik yang stabil karena resonansi."
+    elif jenis == "Aromatik":
+        interpretasi = "Mengandung cincin aromatik yang stabil karena resonansi."
 
-        elif jenis == "Karbohidrat":
-            interpretasi = "Merupakan sumber energi penting pada sistem biologis."
+    elif jenis == "Karbohidrat":
+        interpretasi = "Merupakan sumber energi penting pada sistem biologis."
 
-        elif jenis == "Amida":
-            interpretasi = "Mengandung gugus fungsi amida (-CONH₂)."
+    elif jenis == "Amida":
+        interpretasi = "Mengandung gugus fungsi amida (-CONH₂)."
 
-        elif jenis == "Pelarut":
-            interpretasi = "Digunakan untuk melarutkan berbagai senyawa kimia."
+    elif jenis == "Pelarut":
+        interpretasi = "Digunakan untuk melarutkan berbagai senyawa kimia."
 
-        elif jenis == "Oksidator":
-            interpretasi = "Mampu mengoksidasi zat lain dengan menerima elektron."
+    elif jenis == "Oksidator":
+        interpretasi = "Mampu mengoksidasi zat lain dengan menerima elektron."
 
-        else:
-            interpretasi = "Karakteristik kimia mengikuti gugus fungsi utamanya."
+    else:
+        interpretasi = "Karakteristik kimia mengikuti gugus fungsi utamanya."
 
-        st.info(interpretasi)
+    st.info(interpretasi)
     
-        st.subheader("🔬 Analisis Spesifik Senyawa")
+    st.subheader("🔬 Analisis Spesifik Senyawa")
 
-        analisis_spesifik = {
+    analisis_spesifik = {
 
 "HCl":"Terionisasi sempurna dalam air menghasilkan ion H⁺ dan Cl⁻. Banyak digunakan sebagai titran dan pengatur pH.",
 
