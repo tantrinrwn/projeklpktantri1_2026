@@ -1086,7 +1086,7 @@ pilih = st.selectbox(
 )
 data=db[pilih]
 
-     st.markdown(f"""
+    st.markdown(f"""
 <div class='card'>
 
 <h3>🧪 Informasi Senyawa</h3>
