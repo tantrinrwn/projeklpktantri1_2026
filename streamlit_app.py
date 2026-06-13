@@ -874,7 +874,7 @@ elif menu=="💧 Larutan":
 
         if hitung:
 
-        with st.spinner("Sedang menghitung..."):
+            with st.spinner("Sedang menghitung..."):
                 time.sleep(3)
 
          massa = (info['Mr'] * M * V) / 1000
