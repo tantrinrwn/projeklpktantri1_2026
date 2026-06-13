@@ -1060,31 +1060,31 @@ if st.button("Hitung pH"):
 
 # ================= INFORMASI BAHAN =================
 
-elif menu=="📚 Informasi Bahan Kimia":
-   
-     st.title("📚 Informasi Bahan Kimia")
-     
-     if st.button("⬅ Kembali ke Home"):
+elif menu == "📚 Informasi Bahan Kimia":
+
+    st.title("📚 Informasi Bahan Kimia")
+
+    if st.button("⬅ Kembali ke Home"):
         go_to("🏠 Home")
-        
-     cari=st.text_input("🔎 Cari nama atau rumus senyawa")
 
-     hasil = [
-         x for x in db
-         if cari.lower() in x.lower()
-         or cari.lower() in db[x][0].lower()
-     ] if cari else list(db.keys())
+    cari = st.text_input("🔎 Cari nama atau rumus senyawa")
 
+    hasil = [
+        x for x in db
+        if cari.lower() in x.lower()
+        or cari.lower() in db[x][0].lower()
+    ] if cari else list(db.keys())
 
-        if len(hasil) == 0:
-            st.warning("Data tidak ditemukan")
-            st.stop()
+    if len(hasil) == 0:
+        st.warning("Data tidak ditemukan")
+        st.stop()
 
     pilih = st.selectbox(
         "Pilih Senyawa",
         hasil
     )
-    data=db[pilih]
+
+    data = db[pilih]
 
     st.markdown(f"""
     <div class='card'>
@@ -1109,8 +1109,8 @@ elif menu=="📚 Informasi Bahan Kimia":
     """, unsafe_allow_html=True)
 
 # ================= ANALISIS KIMIA =================
-elif menu=="🧪 Analisis Kimia":
 
+elif menu == "🧪 Analisis Kimia":
     st.title("🧪 Smart Chemical Analysis")
 
     if st.button("⬅ Kembali ke Home"):
