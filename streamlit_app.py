@@ -765,6 +765,9 @@ if menu=="🏠 Home":
 
     with col1:
 
+        if st.button("🚀 Buka Menu Larutan"):
+            go_to("💧 Larutan")
+            
         st.markdown("""
         <div class='card'>
             <div class='feature-title'>💧 Smart Solution Maker</div>
@@ -774,10 +777,10 @@ if menu=="🏠 Home":
         </div>
         """, unsafe_allow_html=True)
 
-        if st.button("🚀 Buka Menu Larutan"):
-            go_to("💧 Larutan")
+        if st.button("📖 Informasi Kimia"):
+            go_to("📚 Informasi Bahan Kimia")
 
-        st.markdown("""
+         st.markdown("""
         <div class='card'>
             <div class='feature-title'>📚 Chemical Database</div>
             <div class='feature-desc'>
@@ -786,10 +789,11 @@ if menu=="🏠 Home":
         </div>
         """, unsafe_allow_html=True)
 
-        if st.button("📖 Informasi Kimia"):
-            go_to("📚 Informasi Bahan Kimia")
 
     with col2:
+
+        if st.button("⚗️ Kalkulator pH"):
+            go_to("⚗️ pH")
 
         st.markdown("""
         <div class='card'>
@@ -800,8 +804,10 @@ if menu=="🏠 Home":
         </div>
         """, unsafe_allow_html=True)
 
-        if st.button("⚗️ Kalkulator pH"):
-            go_to("⚗️ pH")
+
+        if st.button("🧪 Analisis Kimia"):
+            go_to("🧪 Analisis Kimia")
+        st.markdown("### 🚀 System Performance")
 
         st.markdown("""
         <div class='card'>
@@ -811,10 +817,6 @@ if menu=="🏠 Home":
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-        if st.button("🧪 Analisis Kimia"):
-            go_to("🧪 Analisis Kimia")
-        st.markdown("### 🚀 System Performance")
         
         progress=st.progress(0)
         for i in range(100):
