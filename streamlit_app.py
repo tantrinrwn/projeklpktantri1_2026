@@ -281,6 +281,14 @@ transform:rotate(360deg);
 
     margin-bottom:22px;
 
+    min-height:140px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
     box-shadow:
     0 8px 24px rgba(37,99,235,0.15);
 }
@@ -307,18 +315,15 @@ transform:rotate(360deg);
 
     background:rgba(255,255,255,0.55);
 
-    border:1px solid rgba(255,255,255,0.5);
+    border-radius:25px;
 
-    backdrop-filter:blur(18px);
-
-    border-radius:28px;
-
-    padding:28px;
+    padding:25px;
 
     text-align:center;
 
-    box-shadow:
-    0 8px 24px rgba(37,99,235,0.15);
+    min-height:180px;
+
+    box-shadow:0 8px 24px rgba(37,99,235,0.15);
 }
 
 .metric-number{
@@ -830,9 +835,15 @@ elif menu=="💧 Larutan":
 
     st.title("💧 Smart Solution Maker")
 
-    if st.button("⬅ Kembali ke Home"):
-        go_to("🏠 Home")
+    col1, col2 = st.columns(2)
 
+    with col1:
+        if st.button("⬅ Kembali ke Home"):
+            go_to("🏠 Home")
+
+    with col2:
+        hitung = st.button("🧮 Hitung Massa Senyawa")
+        
     senyawa = st.selectbox(
         "Pilih Senyawa",
         list(data_ph.keys()),
@@ -861,7 +872,7 @@ elif menu=="💧 Larutan":
         M = st.number_input("Konsentrasi Larutan (M)", 0.1)
         V = st.number_input("Volume Larutan (mL)", 100.0)
 
-        if st.button("Hitung Massa Senyawa"):
+          if hitung:
 
             with st.spinner("Sedang menghitung..."):
                 time.sleep(3)
@@ -1340,7 +1351,18 @@ elif menu=="ℹ️ Tentang":
         <li>Python</li>
         <li>Streamlit</li>
     </ul>
+    <h3>👨‍💻 Creator</h3>
 
+    <p>
+    1.	Adlina Dhiva Tsaniyah
+    2.	Davina Faiza Laksono
+    3.	Rachel Rafa Rashika
+    4.  Tantri Nirwana Bandiani
+    </p>
+
+    <p>
+    Program Studi Analisis Kimia
+</p>
     <h3>🎓 Dikembangkan Untuk</h3>
 
     <p>
