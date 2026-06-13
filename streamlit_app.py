@@ -874,16 +874,15 @@ elif menu=="💧 Larutan":
 
         if hitung:
 
-            with st.spinner("Sedang menghitung..."):
-                time.sleep(3)
+    with st.spinner("Sedang menghitung..."):
+        time.sleep(3)
 
-                 massa = (info['Mr'] * M * V) / 1000
+    massa = (info['Mr'] * M * V) / 1000
 
-        st.success(f"""
+    st.success(f"""
 ✅ Massa senyawa yang diperlukan:
 {massa:.4f} gram
 """)
-
             st.markdown(f"""
             <div style='
             background:rgba(255,255,255,0.7);
