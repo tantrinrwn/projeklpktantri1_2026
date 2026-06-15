@@ -1507,6 +1507,7 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
         st.session_state.analisis_selesai = True
 
     if st.session_state.analisis_selesai:
+        st.success("ANALISIS SELESAI = TRUE")
 
         data = db[senyawa]
         jenis = data[1]
