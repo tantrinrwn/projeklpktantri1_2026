@@ -939,7 +939,8 @@ if dark_mode:
     </style>
     """, unsafe_allow_html=True)
 
-    
+
+menu = st.session_state.menu
 # ================= HOME =================
 
 if menu == "🏠 Home":
