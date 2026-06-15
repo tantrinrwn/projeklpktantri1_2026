@@ -513,6 +513,9 @@ if not st.session_state.login:
 if "direct_menu" not in st.session_state:
     st.session_state["direct_menu"] = "🏠 Home"
 
+if "analisis_selesai" not in st.session_state:
+    st.session_state.analisis_selesai = False
+
 # ================= DATA PH =================
 
 data_ph={
@@ -1499,14 +1502,32 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    tampilkan_analisis = st.button(
-        "🧪 Analisis Senyawa",
-        key="btn_analisis",
-        use_container_width=True
-    )
+    tampilkan_analisis = False
+
+if not st.session_state.analisis_selesai:
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button(
+            "⬅️ Kembali ke Home",
+            key="btn_home_analisis",
+            use_container_width=True
+        ):
+            st.session_state.menu = "🏠 Home"
+            st.rerun()
+
+    with col2:
+        tampilkan_analisis = st.button(
+            "🧪 Analisis Senyawa",
+            key="btn_analisis",
+            use_container_width=True
+        )
 
     if tampilkan_analisis:
 
+        st.session_state.analisis_selesai = True        
+        
         data = db[senyawa]
         jenis = data[1]
 
@@ -2028,9 +2049,11 @@ bahaya {data[3].lower()}.
         st.markdown("<br>", unsafe_allow_html=True)
 
         if st.button("⬅️ Kembali ke Home", key="home_analisis"):
-            st.session_state.menu = "🏠 Home"
-            st.rerun()
 
+            st.session_state.analisis_selesai = False
+            st.session_state.menu = "🏠 Home"
+
+            st.rerun()
 # ================= TENTANG =================
 
 if menu == "ℹ️ Tentang":
