@@ -1484,6 +1484,7 @@ elif menu == "📚 Informasi Bahan Kimia":
     # ================= NAVIGATION =================
     if home_btn:
         st.session_state.menu = "🏠 Home"
+        st.rerun()
         
 # ================= ANALISIS KIMIA =================
 
