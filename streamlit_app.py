@@ -749,27 +749,6 @@ with st.sidebar:
         st.session_state.nama = ""
         st.rerun()
 
-# ================= ROUTING (INI DI LUAR SIDEBAR) =================
-
-if st.session_state.menu == "🏠 Home":
-    home()
-
-elif st.session_state.menu == "💧 Larutan":
-    larutan()
-
-elif st.session_state.menu == "⚗️ pH":
-    ph()
-
-elif st.session_state.menu == "📚 Informasi Bahan Kimia":
-    info()
-
-elif st.session_state.menu == "🧪 Analisis Kimia":
-    analisis()
-
-elif st.session_state.menu == "ℹ️ Tentang":
-    tentang()
-
-
 menu = selected
 # ================= DARK MODE =================
 
@@ -1504,25 +1483,25 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
 
     tampilkan_analisis = False
 
-if not st.session_state.analisis_selesai:
+    if not st.session_state.analisis_selesai:
 
-    col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
 
-    with col1:
-        if st.button(
-            "⬅️ Kembali ke Home",
-            key="btn_home_analisis",
-            use_container_width=True
-        ):
-            st.session_state.menu = "🏠 Home"
-            st.rerun()
+        with col1:
+            if st.button(
+                "⬅️ Kembali ke Home",
+                key="btn_home_analisis",
+                use_container_width=True
+            ):
+                st.session_state.menu = "🏠 Home"
+                st.rerun()
 
-    with col2:
-        tampilkan_analisis = st.button(
-            "🧪 Analisis Senyawa",
-            key="btn_analisis",
-            use_container_width=True
-        )
+        with col2:
+            tampilkan_analisis = st.button(
+                "🧪 Analisis Senyawa",
+                key="btn_analisis",
+                use_container_width=True
+            )
 
     if tampilkan_analisis:
 
