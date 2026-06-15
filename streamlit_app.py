@@ -1,9 +1,12 @@
-# ================= IMPORT =================
+# =========================
+# IMPORT LIBRARY
+# =========================
 
 import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 import numpy as np
+import plotly.express as px
 import random
 import time
 import math
@@ -12,18 +15,21 @@ import os
 import hashlib
 from datetime import datetime
 
-# ================= PAGE CONFIG =================
+# =========================
+# PAGE CONFIG
+# =========================
 
 st.set_page_config(
-
     page_title="ChemAssist Ultra",
-
     page_icon="🧪",
-
     layout="wide",
-
     initial_sidebar_state="expanded"
 )
+
+
+# =========================
+# USER DATABASE
+# =========================
 
 USER_FILE = "users.json"
 
@@ -31,400 +37,478 @@ if not os.path.exists(USER_FILE):
     with open(USER_FILE, "w") as f:
         json.dump({}, f)
 
+
 def load_users():
     with open(USER_FILE, "r") as f:
         return json.load(f)
+
 
 def save_users(users):
     with open(USER_FILE, "w") as f:
         json.dump(users, f, indent=4)
 
+
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# ================= SESSION =================
 
-# ================= SESSION =================
+# =========================
+# SESSION STATE
+# =========================
 
-if "login" not in st.session_state:
-    st.session_state.login = False
+default_session = {
+    "login": False,
+    "username": "",
+    "nama": "",
+    "menu": "🏠 Home",
+    "history": []
+}
 
-if "history" not in st.session_state:
-    st.session_state.history = []
 
-if "username" not in st.session_state:
-    st.session_state.username = ""
+for key, value in default_session.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
+# ================= PAGE FUNCTIONS =================
 
-if "nama" not in st.session_state:
-    st.session_state.nama = ""
+def home():
+    st.write("Ini halaman home / dashboard")
 
-if "dark_mode" not in st.session_state:
-    st.session_state.dark_mode = False
-# ================= LOGIN =================
+def larutan():
+    st.write("Halaman Larutan")
 
-if not st.session_state.login:
+def ph():
+    st.write("Halaman pH")
 
-    st.title("🧪 ChemAssist Ultra")
+def info():
+    st.write("Halaman Informasi Bahan Kimia")
 
-    users = load_users()
+def analisis():
+    st.write("Halaman Analisis Kimia")
 
-    tab1, tab2 = st.tabs(["🔐 Sign In", "📝 Sign Up"])
+def tentang():
+    st.write("Halaman Tentang")
 
-    with tab1:
-
-        st.subheader("Login")
-
-        username = st.text_input("Username")
-
-        password = st.text_input(
-            "Password",
-            type="password",
-            key="login_password"
-        )
-
-        if st.button("Masuk"):
-
-            if username in users:
-
-                if users[username]["password"] == hash_password(password):
-
-                    users[username]["last_login"] = datetime.now().strftime(
-                        "%d-%m-%Y %H:%M:%S"
-                    )
-
-                    save_users(users)
-
-                    st.session_state.login = True
-                    st.session_state.username = username
-                    st.session_state.nama = users[username]["nama"]
-
-                    st.success("Login berhasil ✅")
-                    st.rerun()
-
-                else:
-                    st.error("Password salah")
-
-            else:
-                st.error("Username tidak ditemukan")
-
-    with tab2:
-
-        st.subheader("Daftar Akun")
-
-        nama = st.text_input("Nama Lengkap")
-
-        email = st.text_input("Email")
-
-        username_baru = st.text_input(
-            "Username Baru"
-        )
-
-        password_baru = st.text_input(
-            "Password Baru",
-            type="password"
-        )
-
-        konfirmasi = st.text_input(
-            "Konfirmasi Password",
-            type="password"
-        )
-
-        if st.button("Daftar"):
-
-            if username_baru in users:
-
-                st.error("Username sudah digunakan")
-
-            elif password_baru != konfirmasi:
-
-                st.error("Password tidak sama")
-
-            else:
-
-                users[username_baru] = {
-
-                    "nama": nama,
-                    "email": email,
-                    "password": hash_password(password_baru),
-                    "last_login": "-"
-
-                }
-
-                save_users(users)
-
-                st.success(
-                    "Akun berhasil dibuat. Silakan login."
-                )
-
-    st.stop()
-
-# ================= CSS =================
+# =========================
+# GLOBAL STYLE
+# =========================
 
 st.markdown("""
 <style>
 
-/* ===== BACKGROUND ===== */
+/* ================= BACKGROUND ================= */
 
-.stApp{
-
-    background:linear-gradient(
-    135deg,
-    #F0F9FF,
-    #E0F2FE,
-    #BAE6FD,
-    #7DD3FC
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #F0F9FF,
+        #E0F2FE,
+        #BAE6FD,
+        #7DD3FC
     );
-
-    background-size:400% 400%;
-
-    animation:bg 15s ease infinite;
 }
 
-@keyframes bg{
-
-0%{
-background-position:0% 50%;
+.block-container {
+    padding-top: 2rem;
 }
 
-50%{
-background-position:100% 50%;
-}
+/* ================= LOGO ANIMATION ================= */
 
-100%{
-background-position:0% 50%;
-}
-}
-
-/* ===== HIDE ===== */
-
-button[kind="header"]{
-    display:none;
-}
-
-/* ===== SIDEBAR ===== */
-
-section[data-testid="stSidebar"]{
-
-    background:rgba(255,255,255,0.35);
-
-    backdrop-filter:blur(18px);
-
-    border-right:1px solid rgba(255,255,255,0.2);
-}
-
-/* ===== TEXT ===== */
-
-html, body, [class*="css"]{
-
-    color:#0F172A;
-}
-
-/* ===== TITLE ===== */
-
-.main-title{
-
-    font-size:65px;
-
-    font-weight:900;
-
+.logo-container {
     text-align:center;
-
-    color:#2563EB;
-
-    margin-top:-20px;
+    margin-bottom:10px;
 }
 
-/* ===== SUBTITLE ===== */
-
-.subtitle{
-
-    text-align:center;
-
-    color:#1E40AF;
-
-    font-size:18px;
-
-    margin-bottom:35px;
+.logo-spin {
+    font-size:80px;
+    display:inline-block;
+    animation: spin 6s linear infinite;
+    transform-origin:center;
 }
 
-/* ===== LOGO ===== */
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+/* ================= LOGIN ================= */
 
-.logo{
+.login-title {
+    text-align: center;
 
-    text-align:center;
+    font-size: 58px;
+    font-weight: 900;
 
-    font-size:90px;
-
-    animation:spin 8s linear infinite;
+    color: #1E3A8A;
 }
 
-@keyframes spin{
 
-100%{
-transform:rotate(360deg);
+.login-sub {
+    text-align: center;
+
+    color: #475569;
+    font-size: 18px;
+
+    margin-bottom: 35px;
 }
-}
 
-/* ===== CARD ===== */
 
-.card{
+.stTabs {
+    background: rgba(255,255,255,0.90);
 
-    background:rgba(255,255,255,0.55);
+    backdrop-filter: blur(20px);
 
-    border:1px solid rgba(255,255,255,0.5);
+    padding: 35px;
 
-    backdrop-filter:blur(18px);
-
-    border-radius:28px;
-
-    padding:28px;
-
-    margin-bottom:22px;
-
-    min-height:140px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
+    border-radius: 30px;
 
     box-shadow:
-    0 8px 24px rgba(37,99,235,0.15);
+        0 15px 35px rgba(37,99,235,0.18);
 }
 
-/* ===== METRIC ===== */
 
-.metric{
+button[data-baseweb="tab"] {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
 
-    background:linear-gradient(
-    135deg,
-    rgba(255,255,255,0.65),
-    rgba(255,255,255,0.4));
 
-    padding:30px;
+.login-box-title {
+    text-align: center;
 
-    border-radius:25px;
+    font-size: 28px;
+    font-weight: 800;
 
-    text-align:center;
+    color: #2563EB;
+
+    margin-bottom: 20px;
+}
+
+
+/* ================= INPUT ================= */
+
+.stTextInput input {
+    background: white !important;
+
+    border-radius: 14px !important;
+
+    border: 1px solid #BFDBFE !important;
+
+    padding: 10px;
+}
+
+
+/* ================= BUTTON ================= */
+
+.stButton button {
+    width: 100% !important;
+
+    height: 52px !important;
+
+    border-radius: 15px !important;
+
+    background: white !important;
+
+    color: #2563EB !important;
+
+    border: 1px solid #BFDBFE !important;
+
+    font-size: 16px !important;
+
+    font-weight: 700 !important;
 
     box-shadow:
-    0 8px 22px rgba(37,99,235,0.12);
-}
-.metric-box{
+        0 6px 15px rgba(37,99,235,0.12) !important;
 
-    background:rgba(255,255,255,0.55);
-
-    border-radius:25px;
-
-    padding:25px;
-
-    text-align:center;
-
-    min-height:180px;
-
-    box-shadow:0 8px 24px rgba(37,99,235,0.15);
+    transition: 0.3s;
 }
 
-.metric-number{
 
-    font-size:48px;
+.stButton button:hover {
 
-    font-weight:900;
+    transform: translateY(-2px);
 
-    color:#2563EB;
+    background: #EFF6FF !important;
 }
 
-.metric-label{
 
-    color:#334155;
+/* ================= SIDEBAR ================= */
 
-    font-size:17px;
+section[data-testid="stSidebar"] {
+
+    background: rgba(255,255,255,0.55);
+
+    backdrop-filter: blur(20px);
+
+    border-right:
+        1px solid rgba(255,255,255,0.4);
 }
 
-/* ===== BUTTON ===== */
 
-.stButton > button{
+/* ================= CARD ================= */
 
-    width:100%;
+.card,
+.metric-box,
+.feature-card,
+.info-box,
+.tentang-box {
 
-    background:linear-gradient(
-    90deg,
-    #38BDF8,
-    #2563EB
+    border-radius: 25px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,0.15);
+}
+
+
+/* ================= METRIC ================= */
+
+.metric-box {
+
+    background:
+        rgba(255,255,255,0.75);
+
+    text-align: center;
+
+    backdrop-filter: blur(18px);
+}
+
+
+.metric-box h2 {
+    font-size: 40px;
+
+    margin-bottom: 5px;
+}
+
+
+.metric-box h3 {
+    font-size: 32px;
+
+    font-weight: 900;
+
+    color: #2563EB;
+}
+
+
+.metric-box p {
+    color: #475569;
+}
+
+
+/* ================= FEATURE CARD ================= */
+
+.feature-card {
+
+    background: linear-gradient(
+        135deg,
+        #3B82F6,
+        #2563EB
     );
 
-    color:white;
+    min-height: 160px;
 
-    border:none;
-
-    border-radius:16px;
-
-    padding:13px;
-
-    font-size:17px;
-
-    font-weight:bold;
+    margin-bottom: 20px;
 }
 
-/* ===== PARTICLES ===== */
 
-.particle{
+.feature-title {
 
-    position:fixed;
+    color: white;
 
-    width:12px;
+    font-size: 22px;
 
-    height:12px;
+    font-weight: 800;
 
-    border-radius:50%;
-
-    background:rgba(255,255,255,0.5);
-
-    animation:float 14s infinite linear;
+    margin-bottom: 10px;
 }
 
-.particle:nth-child(1){left:10%;}
-.particle:nth-child(2){left:30%;}
-.particle:nth-child(3){left:50%;}
-.particle:nth-child(4){left:70%;}
-.particle:nth-child(5){left:90%;}
 
-@keyframes float{
+.feature-desc {
 
-0%{
-transform:translateY(100vh);
+    color: #E0F2FE;
+
+    line-height: 1.6;
 }
 
-100%{
-transform:translateY(-120vh);
+
+/* ================= STATUS CARD ================= */
+
+.card {
+
+    background:
+        rgba(255,255,255,0.75);
+
+    backdrop-filter: blur(18px);
 }
+
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #60A5FA;
+    border-radius: 20px;
+}
+
+/* ================= HEADER TITLE ================= */
+
+.main-title {
+    text-align: center !important;
+    font-size: 64px !important;
+    font-weight: 900 !important;
+
+    color: #0B1F5E !important;
+
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+
+    margin-top: 5px !important;
+    margin-bottom: 8px !important;
+
+    text-shadow: 
+        0 4px 15px rgba(11, 31, 94, 0.3) !important;
+}
+
+.subtitle {
+    text-align: center !important;
+
+    color: #1E3A8A !important;
+
+    font-size: 20px !important;
+    font-weight: 500 !important;
+
+    letter-spacing: 1px !important;
 }
 
 </style>
-
-<div class="particle"></div>
-<div class="particle"></div>
-<div class="particle"></div>
-<div class="particle"></div>
-<div class="particle"></div>
-
 """, unsafe_allow_html=True)
 
-# ================= HEADER =================
 
-st.markdown("""
-<div class="logo">🧪</div>
 
-<div class="main-title">
-ChemAssist Ultra
-</div>
+# ================= LOGIN PAGE =================
 
-<div class="subtitle">
-Next Generation Chemistry Dashboard
-</div>
-""", unsafe_allow_html=True)
+if not st.session_state.login:
 
+    users = load_users()
+
+    # Header Login
+    st.markdown("""
+    <div class="login-title">
+        🧪 ChemAssist Ultra
+    </div>
+
+    <div class="login-sub">
+        Smart Chemical Analysis Platform
+    </div>
+    """, unsafe_allow_html=True)
+
+
+    # Posisi tengah
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    with col2:
+
+        # Tab Login dan Register
+        tab1, tab2 = st.tabs([
+            "🔐 Sign In",
+            "📝 Sign Up"
+        ])
+
+
+        # ================= SIGN IN =================
+        with tab1:
+
+            st.markdown("""
+            <div class='login-box-title'>
+                Welcome Back 👋
+            </div>
+            """, unsafe_allow_html=True)
+
+            username = st.text_input("Username", key="login_username")
+            password = st.text_input("Password", type="password", key="login_password")
+
+            if st.button("🚀 Login", key="btn_login", use_container_width=True):
+
+                username_clean = username.strip().lower()
+
+                user = users.get(username_clean)
+
+                if user:
+
+                    if user["password"] == hash_password(password):
+
+                        user["last_login"] = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+                        users[username_clean] = user
+                        save_users(users)
+
+                        st.session_state.login = True
+                        st.session_state.username = username_clean
+                        st.session_state.nama = user["nama"]
+
+                        st.success("Login berhasil ✅")
+                        time.sleep(1)
+                        st.rerun()
+
+                    else:
+                        st.error("Password salah")
+
+                else:
+                    st.error("Username tidak ditemukan")
+
+
+        # ================= SIGN UP =================
+        with tab2:
+
+            st.markdown("""
+            <div class='login-box-title'>
+                Create Account ✨
+            </div>
+            """, unsafe_allow_html=True)
+
+            nama = st.text_input("Nama Lengkap", key="signup_nama")
+            email = st.text_input("Email", key="signup_email")
+            username_baru = st.text_input("Username", key="signup_username")
+            password_baru = st.text_input("Password", type="password", key="signup_password")
+            konfirmasi = st.text_input("Konfirmasi Password", type="password", key="signup_konfirmasi")
+
+            if st.button("📝 Daftar", key="btn_signup", use_container_width=True):
+
+                username_clean = username_baru.strip().lower()
+
+                # ===== VALIDASI =====
+                if not nama or not email or not username_baru or not password_baru:
+                    st.warning("Semua data wajib diisi")
+
+                elif password_baru != konfirmasi:
+                    st.error("Konfirmasi password tidak cocok")
+
+                elif username_clean in users:
+                    st.error("Username sudah digunakan")
+
+                else:
+
+                    users[username_clean] = {
+                        "nama": nama,
+                        "email": email,
+                        "password": hash_password(password_baru),
+                        "last_login": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+                    }
+
+                    save_users(users)
+
+                    st.success("Akun berhasil dibuat 🎉")
+                    time.sleep(1)
+                    st.rerun()
+
+    st.stop()
+    
 # ================= SESSION =================
 
 if "direct_menu" not in st.session_state:
@@ -535,15 +619,32 @@ def go_to(page_name):
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
 
+# ================= HEADER GLOBAL =================
+st.markdown("""
+
+<div class="logo-container">
+    <div class="logo-spin">🧪</div>
+</div>
+
+<div class="main-title">
+ChemAssist Dashboard
+</div>
+
+<div class="subtitle">
+Sistem Analisis Parameter Laboratorium Kimia Interaktif
+</div>
+
+""", unsafe_allow_html=True)
+
 # ================= SIDEBAR =================
 
 with st.sidebar:
 
     if st.session_state.login:
         st.success(
-        f"👤 {st.session_state.nama}"
-    )
-
+            f"👤 {st.session_state.nama}"
+        )
+        
     users = load_users()
 
     if st.session_state.username in users:
@@ -553,97 +654,127 @@ with st.sidebar:
             f"{users[st.session_state.username]['last_login']}"
         )
 
+    if "dark_mode" not in st.session_state:
+    st.session_state.dark_mode = False
+
     dark_mode = st.toggle(
-    "🌙 Dark Mode",
-    value=st.session_state.dark_mode
-)
+        "🌙 Dark Mode",
+        value=st.session_state.dark_mode
+    )
 
-st.session_state.dark_mode = dark_mode
+    st.session_state.dark_mode = dark_mode
 
-if dark_mode:
-    sidebar_bg = "#0F172A"
-    nav_bg = "#1E293B"
-    nav_text = "white"
-else:
-    sidebar_bg = "#E0F2FE"
-    nav_bg = "#FFFFFF"
-    nav_text = "#0F172A"
+    if dark_mode:
+        sidebar_bg = "#0F172A"
+        nav_bg = "#1E293B"
+        nav_text = "white"
+    else:
+        sidebar_bg = "#E0F2FE"
+        nav_bg = "#FFFFFF"
+        nav_text = "#0F172A"
 
-selected = option_menu(
-    menu_title="✨ ChemAssist Menu",
+    selected = option_menu(
+        menu_title="✨ ChemAssist Menu",
 
-    options=[
-        "🏠 Home",
-        "💧 Larutan",
-        "⚗️ pH",
-        "📚 Informasi Bahan Kimia",
-        "🧪 Analisis Kimia",
-        "ℹ️ Tentang"
-    ],
+        options=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
+        ],
 
-    icons=[
-        "house-fill",
-        "droplet-fill",
-        "eyedropper",
-        "book-fill",
-        "activity",
-        "info-circle-fill"
-    ],
+        icons=[
+            "house-fill",
+            "droplet-fill",
+            "eyedropper",
+            "book-fill",
+            "activity",
+            "info-circle-fill"
+        ],
 
-    menu_icon="stars",
+        menu_icon="stars",
 
-    default_index=[
-        "🏠 Home",
-        "💧 Larutan",
-        "⚗️ pH",
-        "📚 Informasi Bahan Kimia",
-        "🧪 Analisis Kimia",
-        "ℹ️ Tentang"
+        default_index=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
         ].index(st.session_state.menu),
 
-    styles={
+        styles={
 
-        "container": {
-            "padding": "15px",
-            "background-color": sidebar_bg,
-            "border-radius": "20px",
-        },
+            "container": {
+                "padding": "15px",
+                "background-color": sidebar_bg,
+                "border-radius": "20px",
+            },
 
-         "icon": {
-             "color": "#38BDF8",
-             "font-size": "20px"
-         },
+            "icon": {
+                "color": "#38BDF8",
+                "font-size": "20px"
+            },
 
-         "nav-link": {
-            "font-size": "17px",
-            "text-align": "left",
-            "margin": "8px",
-            "padding": "12px",
-            "border-radius": "14px",
-            "background-color": nav_bg,
-            "color": nav_text,
-            "font-weight": "600",
-            "--hover-color": "#334155",
-         },
+            "nav-link": {
+                "font-size": "17px",
+                "text-align": "left",
+                "margin": "8px",
+                "padding": "12px",
+                "border-radius": "14px",
+                "background-color": nav_bg,
+                "color": nav_text,
+                "font-weight": "600",
+                "--hover-color": "#334155",
+            },
 
             "nav-link-selected": {
-            "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-            "color": "white",
-            "font-weight": "bold",
-         },
-     }
-  )
-if st.button("🚪 Logout"):
-    st.session_state.login = False
-    st.session_state.username = ""
-    st.session_state.nama = ""
-    st.rerun()
+                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+                "color": "white",
+                "font-weight": "bold",
+            },
+        }
+    )
+    st.session_state.menu = selected
+
+    st.markdown("---")
+
+    if st.button("🚪 Logout"):
+        st.session_state.login = False
+        st.session_state.username = ""
+        st.session_state.nama = ""
+        st.rerun()
+
+# ================= ROUTING (INI DI LUAR SIDEBAR) =================
+
+if st.session_state.menu == "🏠 Home":
+    home()
+
+elif st.session_state.menu == "💧 Larutan":
+    larutan()
+
+elif st.session_state.menu == "⚗️ pH":
+    ph()
+
+elif st.session_state.menu == "📚 Informasi Bahan Kimia":
+    info()
+
+elif st.session_state.menu == "🧪 Analisis Kimia":
+    analisis()
+
+elif st.session_state.menu == "ℹ️ Tentang":
+    tentang()
+    
 # ================= DARK MODE =================
 
 if dark_mode:
 
     st.markdown("""
     <style>
+
+    /* ================= BACKGROUND ================= */
 
     .stApp{
         background:linear-gradient(
@@ -654,7 +785,8 @@ if dark_mode:
         ) !important;
     }
 
-    /* SIDEBAR */
+    /* ================= SIDEBAR ================= */
+
     section[data-testid="stSidebar"]{
         background:#0F172A !important;
     }
@@ -667,18 +799,51 @@ if dark_mode:
         color:white !important;
     }
 
-    /* Card */
+    /* ChemAssist Menu */
+
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] span{
+        color:white !important;
+    }
+
+    /* ================= CARD ================= */
+
     .card{
-        background:rgba(15,23,42,0.6) !important;
+        background:rgba(15,23,42,0.70) !important;
         border:1px solid rgba(255,255,255,0.08) !important;
         color:white !important;
     }
 
-    /* Metric Home */
-    .metric-box{
-        color:white !important;
-        background:rgba(15,23,42,0.6) !important;
+    /* ================= HOME CARD ================= */
+
+    .home-card{
+        background:linear-gradient(
+        135deg,
+        #1E293B,
+        #334155
+        ) !important;
+
         border:1px solid rgba(255,255,255,0.08) !important;
+
+        box-shadow:
+        0 8px 25px rgba(0,0,0,0.4) !important;
+    }
+
+    .home-card h3,
+    .home-card p{
+        color:white !important;
+    }
+
+    /* ================= METRIC ================= */
+
+    .metric-box{
+        background:rgba(15,23,42,0.70) !important;
+        border:1px solid rgba(255,255,255,0.08) !important;
+        color:white !important;
     }
 
     .metric-box h2{
@@ -693,157 +858,256 @@ if dark_mode:
         color:#E2E8F0 !important;
     }
 
-    /* Form */
-    .stSelectbox label,
-    .stNumberInput label,
-    .stTextInput label,
-    .stRadio label,
-    .stSlider label{
+    /* ================= BUTTON ================= */
+
+    .stButton > button{
+        background:#1E293B !important;
         color:white !important;
-        font-weight:600;
+        border:1px solid #334155 !important;
     }
 
-    /* Isi selectbox & input tetap hitam */
-    .stSelectbox div[data-baseweb="select"] *,
+    .stButton > button:hover{
+        background:#2563EB !important;
+        color:white !important;
+    }
+
+    /* ================= INPUT ================= */
+
+    .stTextInput input,
     .stNumberInput input{
+        background:#1E293B !important;
+        color:white !important;
+        border:1px solid #334155 !important;
+    }
+   .stSelectbox div[data-baseweb="select"]{
+        background:#1E293B !important;
+    }
+
+    .stSelectbox div[data-baseweb="select"] *{
+        color:white !important;
+    }
+    .stSelectbox div[data-baseweb="select"] *{
         color:black !important;
     }
 
-    /* Judul */
-    h1,h2,h3,h4,h5,h6,p,span{
+    /* ================= TEXT ================= */
+
+    h1,h2,h3,h4,h5,h6{
         color:white !important;
     }
 
-    .metric-label{
+    p,span,label{
         color:#E2E8F0 !important;
     }
 
-    /* Halaman Tentang */
-    .tentang-box,
-    .tentang-box h2,
-    .tentang-box h3,
-    .tentang-box li,
-    .tentang-box p{
+    .main-title{
         color:white !important;
     }
 
+    .subtitle{
+        color:#CBD5E1 !important;
+    }
+
+    /* ================= INFO ================= */
+
+    .stAlert{
+        background:#1E293B !important;
+        color:white !important;
+    }
+
+    /* ================= TENTANG ================= */
+
+    .tentang-box{
+        background:rgba(15,23,42,0.7) !important;
+        border:1px solid rgba(255,255,255,0.08) !important;
+    }
+
+    .tentang-box *{
+        color:white !important;
+    }
+
+    /* ================= METRIC ================= */
+
+    [data-testid="stMetric"]{
+        background:#1E293B;
+        padding:15px;
+        border-radius:15px;
+        border:1px solid #334155;
+    }
+
+    [data-testid="stMetric"] *{
+        color:white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 menu = selected
+    
 # ================= HOME =================
 
-if menu=="🏠 Home":
+if menu == "🏠 Home":
 
-    c1,c2,c3=st.columns(3)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    with c1:
+    # ================= Statistik =================
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
         st.markdown(f"""
-        <div class='metric-box'>
-        <h2>📚</h2>
-        <h3>{len(db)}</h3>
-        <p>Database Senyawa</p>
+        <div class="metric-box">
+            <h2>📚</h2>
+            <h3>{len(db)}</h3>
+            <p>Database Senyawa</p>
         </div>
         """, unsafe_allow_html=True)
 
-    with c2:
+    with col2:
         st.markdown(f"""
-        <div class='metric-box'>
-        <h2>⚗️</h2>
-        <h3>{len(data_ph)}</h3>
-        <p>Data pH</p>
+        <div class="metric-box">
+            <h2>⚗️</h2>
+            <h3>{len(data_ph)}</h3>
+            <p>Data pH</p>
         </div>
         """, unsafe_allow_html=True)
 
-    with c3:
+    with col3:
         st.markdown("""
-        <div class='metric-box'>
-        <h2>🚀</h2>
-        <h3>5.0</h3>
-        <p>Modern Edition</p>
+        <div class="metric-box">
+            <h2>🚀</h2>
+            <h3>5.0</h3>
+            <p>Modern Edition</p>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    col1,col2=st.columns(2)
+    # ================= FITUR UTAMA =================
 
-    with col1:
-
-        if st.button("🚀 Buka Menu Larutan"):
-            go_to("💧 Larutan")
-            
-        st.markdown("""
-        <div class='card'>
-            <div class='feature-title'>💧 Smart Solution Maker</div>
-            <div class='feature-desc'>
-            Perhitungan larutan otomatis dengan tampilan modern.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        if st.button("📖 Informasi Kimia"):
-            go_to("📚 Informasi Bahan Kimia")
-
-        st.markdown("""
-        <div class='card'>
-            <div class='feature-title'>📚 Chemical Database</div>
-            <div class='feature-desc'>
-            Informasi senyawa lengkap dan interaktif.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-    with col2:
-
-        if st.button("⚗️ Kalkulator pH"):
-            go_to("⚗️ pH")
-
-        st.markdown("""
-        <div class='card'>
-            <div class='feature-title'>⚡ Smart pH Calculator</div>
-            <div class='feature-desc'>
-            Analisis pH cepat dengan sistem otomatis.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-        if st.button("🧪 Analisis Kimia"):
-            go_to("🧪 Analisis Kimia")
-        st.markdown("### 🚀 System Performance")
-
-        st.markdown("""
-        <div class='card'>
-            <div class='feature-title'>🧠 Chemical Analysis</div>
-            <div class='feature-desc'>
-            Analisis karakteristik senyawa modern.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        progress=st.progress(0)
-        for i in range(100):
-            time.sleep(0.01)
-            progress.progress(i+1)
-        st.success("System Ready ✅")
-
-# ================= LARUTAN =================
-
-elif menu=="💧 Larutan":
-
-    st.title("💧 Smart Solution Maker")
+    st.markdown("## 🚀 Fitur Utama")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("⬅ Kembali ke Home"):
-            go_to("🏠 Home")
+
+        if st.button("💧 Buka Menu Larutan", use_container_width=True):
+            go_to("💧 Larutan")
+
+        st.markdown("""
+        <div style="
+            background:linear-gradient(135deg,#60A5FA,#2563EB);
+            height:190px;
+            padding:25px;
+            border-radius:20px;
+            color:white;
+            margin-bottom:20px;
+            box-shadow:0 8px 20px rgba(37,99,235,0.25);
+        ">
+            <h3>💧 Smart Solution Maker</h3>
+            <p>
+            Perhitungan larutan otomatis dengan tampilan modern dan langkah pembuatan larutan yang praktis.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("📚 Informasi Kimia", use_container_width=True):
+            go_to("📚 Informasi Bahan Kimia")
+
+        st.markdown("""
+        <div style="
+            background:linear-gradient(135deg,#60A5FA,#2563EB);
+            height:190px;
+            padding:25px;
+            border-radius:20px;
+            color:white;
+            margin-bottom:20px;
+            box-shadow:0 8px 20px rgba(37,99,235,0.25);
+        ">
+            <h3>📚 Chemical Database</h3>
+            <p>
+            Menampilkan informasi senyawa kimia lengkap, sifat, bahaya, dan struktur molekul.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
-        hitung = st.button("🧮 Hitung Massa Senyawa")
-        
+
+        if st.button("⚗️ Kalkulator pH", use_container_width=True):
+            go_to("⚗️ pH")
+
+        st.markdown("""
+        <div style="
+            background:linear-gradient(135deg,#60A5FA,#2563EB);
+            height:190px;
+            padding:25px;
+            border-radius:20px;
+            color:white;
+            margin-bottom:20px;
+            box-shadow:0 8px 20px rgba(37,99,235,0.25);
+        ">
+            <h3>⚡ Smart pH Calculator</h3>
+            <p>
+            Menghitung pH larutan asam dan basa secara cepat dan otomatis.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("🧪 Analisis Kimia", use_container_width=True):
+            go_to("🧪 Analisis Kimia")
+
+        st.markdown("""
+        <div style="
+            background:linear-gradient(135deg,#60A5FA,#2563EB);
+            height:190px;
+            padding:25px;
+            border-radius:20px;
+            color:white;
+            margin-bottom:20px;
+            box-shadow:0 8px 20px rgba(37,99,235,0.25);
+        ">
+            <h3>🧪 Chemical Analysis</h3>
+            <p>
+            Analisis karakteristik senyawa, reaktivitas, keamanan, dan interpretasi kimia.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ================= LIVE SYSTEM MONITOR =================
+
+    st.markdown("## 🚀 Live System Monitor")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.metric(
+            label="🟢 Status",
+            value="ONLINE"
+        )
+
+    with c2:
+        st.metric(
+            label="⚡ Response Time",
+            value="0.2 s"
+        )
+
+    with c3:
+        st.metric(
+            label="🧪 Database",
+            value=f"{len(db)} Senyawa"
+        )
+
+    st.info("🔄 Smart Chemical Engine Running")
+
+    st.success("✅ ChemAssist Ultra Ready")
+    
+# ================= LARUTAN =================
+
+elif menu == "💧 Larutan":
+
+    st.title("💧 Smart Solution Maker")
+
     senyawa = st.selectbox(
         "Pilih Senyawa",
         list(data_ph.keys()),
@@ -869,8 +1133,35 @@ elif menu=="💧 Larutan":
 
     if metode == "Pembuatan Larutan":
 
-        M = st.number_input("Konsentrasi Larutan (M)", 0.1)
-        V = st.number_input("Volume Larutan (mL)", 100.0)
+        M = st.number_input(
+            "Konsentrasi Larutan (M)",
+            min_value=0.0,
+            value=0.1
+        )
+
+        V = st.number_input(
+            "Volume Larutan (mL)",
+            min_value=0.0,
+            value=100.0
+        )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button(
+                "⬅️ Kembali ke Home",
+                use_container_width=True
+            ):
+                st.session_state.menu = "🏠 Home"
+                st.rerun()
+        
+        with col2:
+            hitung = st.button(
+                "🧪 Hitung Massa Senyawa",
+                use_container_width=True
+            )
 
         if hitung:
 
@@ -880,9 +1171,11 @@ elif menu=="💧 Larutan":
             massa = (info['Mr'] * M * V) / 1000
 
             st.success(f"""
-        ✅ Massa senyawa yang diperlukan:
-        {massa:.4f} gram
-        """)
+✅ Massa senyawa yang diperlukan:
+
+{massa:.4f} gram
+""")
+
             st.markdown(f"""
             <div style='
             background:rgba(255,255,255,0.7);
@@ -921,7 +1214,7 @@ elif menu=="💧 Larutan":
             </div>
             """, unsafe_allow_html=True)
 
-    # ================= PENGENCERAN =================
+      # ================= PENGENCERAN =================
 
     else:
 
@@ -929,10 +1222,27 @@ elif menu=="💧 Larutan":
         V1 = st.number_input("Volume Awal (mL)", 100.0)
         M2 = st.number_input("Molaritas Akhir (M)", 0.1)
 
-        if st.button("Hitung Pengenceran"):
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button("⬅️ Kembali ke Home"):
+                st.session_state.menu = "🏠 Home"
+                st.rerun()
+
+        with col2:
+            hitung_pengenceran = st.button(
+                "💧 Hitung Pengenceran",
+                key="btn_pengenceran",
+                use_container_width=True
+            )
+
+        if hitung_pengenceran:
 
             if M2 >= M1:
                 st.error("Molaritas akhir harus lebih kecil dari molaritas awal.")
+
             else:
 
                 with st.spinner("Sedang menghitung..."):
@@ -991,22 +1301,20 @@ larutan {M2} M.
 
                 </div>
                 """, unsafe_allow_html=True)
+                
 # ================= PH =================
 
-elif menu=="⚗️ pH":
+elif menu == "⚗️ pH":
 
     st.title("⚗️ Smart pH Calculator")
 
-    if st.button("⬅ Kembali ke Home"):
-        go_to("🏠 Home")
-
-    senyawa=st.selectbox(
-    "Pilih Senyawa",
-    list(data_ph.keys()),
-    format_func=lambda x:f"{data_ph[x]['nama']} ({x})"
+    senyawa = st.selectbox(
+        "Pilih Senyawa",
+        list(data_ph.keys()),
+        format_func=lambda x: f"{data_ph[x]['nama']} ({x})"
     )
 
-    info=data_ph[senyawa]
+    info = data_ph[senyawa]
 
     st.info(f"""
 🧪 Nama Senyawa : {info['nama']}
@@ -1016,58 +1324,84 @@ elif menu=="⚗️ pH":
 ⚖️ Mr : {info['Mr']} g/mol
 """)
 
-C = st.number_input(
-    "Masukkan Konsentrasi (M)",
-    min_value=0.000001,
-    value=0.01
-)
+    C = st.number_input(
+        "Masukkan Konsentrasi (M)",
+        min_value=0.0,
+        value=0.01
+    )
 
-if st.button("Hitung pH"):
-    with st.spinner("Sedang menghitung..."):
-            time.sleep(5)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    if "Asam kuat" in info["jenis"]:
+    # ================= TOMBOL =================
 
-        ph=-math.log10(C*info["valensi"])
+    col1, col2 = st.columns(2)
 
-    elif "Basa kuat" in info["jenis"]:
+    with col1:
+            if st.button("⬅️ Kembali ke Home"):
+                st.session_state.menu = "🏠 Home"
+                st.rerun()
 
-        poh=-math.log10(C*info["valensi"])
-        ph=14-poh
+    with col2:
+        hitung_ph = st.button(
+            "⚗️ Hitung pH",
+            key="btn_ph",
+            use_container_width=True
+        )
 
-    elif "Asam lemah" in info["jenis"]:
+    # ================= PERHITUNGAN =================
 
-        H=math.sqrt(info["Ka"]*C)
-        ph=-math.log10(H)
+    if hitung_ph:
 
-    else:
+        with st.spinner("Sedang menghitung..."):
+            time.sleep(3)
 
-        OH=math.sqrt(info["Kb"]*C)
-        poh=-math.log10(OH)
-        ph=14-poh
+        if "Asam kuat" in info["jenis"]:
 
-    st.metric("📊 Nilai pH",f"{ph:.2f}")
+            ph = -math.log10(C * info["valensi"])
 
-    if ph <= 1:
-        st.error("🔴 Sangat Asam")
+        elif "Basa kuat" in info["jenis"]:
 
-    elif ph <= 3:
-        st.warning("🟠 Asam")
+            poh = -math.log10(C * info["valensi"])
+            ph = 14 - poh
 
-    elif ph <= 6:
-        st.info("🟡 Asam Lemah")
+        elif "Asam lemah" in info["jenis"]:
 
-    elif ph == 7:
-        st.success("🟢 Netral")
+            H = math.sqrt(info["Ka"] * C)
+            ph = -math.log10(H)
 
-    elif ph <= 11:
-        st.info("🔵 Basa Lemah")
+        else:
 
-    elif ph <= 13:
-        st.warning("🟣 Basa")
+            OH = math.sqrt(info["Kb"] * C)
+            poh = -math.log10(OH)
+            ph = 14 - poh
 
-    else:
-        st.error("⚫ Sangat Basa")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.metric(
+            "📊 Nilai pH",
+            f"{ph:.2f}"
+        )
+
+        if ph <= 1:
+            st.error("🔴 Sangat Asam")
+
+        elif ph <= 3:
+            st.warning("🟠 Asam")
+
+        elif ph <= 6:
+            st.info("🟡 Asam Lemah")
+
+        elif ph == 7:
+            st.success("🟢 Netral")
+
+        elif ph <= 11:
+            st.info("🔵 Basa Lemah")
+
+        elif ph <= 13:
+            st.warning("🟣 Basa")
+
+        else:
+            st.error("⚫ Sangat Basa")
 
 # ================= INFORMASI BAHAN =================
 
@@ -1075,9 +1409,7 @@ elif menu == "📚 Informasi Bahan Kimia":
 
     st.title("📚 Informasi Bahan Kimia")
 
-    if st.button("⬅ Kembali ke Home"):
-        go_to("🏠 Home")
-
+    # ================= SEARCH =================
     cari = st.text_input("🔎 Cari nama atau rumus senyawa")
 
     hasil = [
@@ -1086,248 +1418,634 @@ elif menu == "📚 Informasi Bahan Kimia":
         or cari.lower() in db[x][0].lower()
     ] if cari else list(db.keys())
 
-    if len(hasil) == 0:
-        st.warning("Data tidak ditemukan")
-        st.stop()
-
+    # ================= SELECTBOX =================
     pilih = st.selectbox(
         "Pilih Senyawa",
-        hasil
+        hasil,
+        key="select_senyawa_info"
     )
 
-    data = db[pilih]
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div class='card'>
+    # ================= BUTTON =================
+    col1, col2 = st.columns([1, 1])
 
-    <h3>🧪 Informasi Senyawa</h3>
+    with col1:
+        home_btn = st.button(
+            "🏠 Kembali ke Home",
+            key="btn_home_info",
+            use_container_width=True
+        )
 
-    <b>Nama Senyawa:</b> {data[0]}<br><br>
+    with col2:
+        tampilkan_info = st.button(
+            "📖 Tampilkan Informasi",
+            key="btn_info",
+            use_container_width=True
+        )
 
-    <b>Rumus Kimia:</b> {pilih}<br><br>
+    # ================= OUTPUT CARD (HARUS DI DALAM MENU) =================
+    if tampilkan_info and pilih:
 
-    <b>Jenis:</b> {data[1]}<br><br>
+        data = db[pilih]
 
-    <b>Mr:</b> {data[2]}<br><br>
+        jenis = data[1]
+        senyawa = pilih
 
-    <b>Bahaya:</b> {data[3]}<br><br>
+        st.markdown(f"""
+        <div style="
+            background:#F8FAFC;
+            padding:22px;
+            border-radius:16px;
+            color:#0F172A;
+            box-shadow:0 8px 20px rgba(0,0,0,0.12);
+            line-height:1.7;
+            border:1px solid #E2E8F0;
+        ">
 
-    <b>Bentuk/Fisik:</b> {data[4]}<br><br>
+        <h3 style="
+            margin-bottom:18px;
+            color:#1E3A8A;
+            border-bottom:2px solid #1E3A8A;
+            padding-bottom:8px;
+        ">
+        🧪 Informasi Senyawa
+        </h3>
 
-    <b>Struktur Molekul:</b> {data[5]}
+        <p><b style="color:#1E3A8A;">Nama Senyawa:</b> {data[0]}</p>
+        <p><b style="color:#1E3A8A;">Rumus Kimia:</b> {pilih}</p>
+        <p><b style="color:#1E3A8A;">Jenis:</b> {data[1]}</p>
+        <p><b style="color:#1E3A8A;">Mr:</b> {data[2]}</p>
+        <p><b style="color:#1E3A8A;">Bahaya:</b> {data[3]}</p>
+        <p><b style="color:#1E3A8A;">Bentuk/Fisik:</b> {data[4]}</p>
+        <p><b style="color:#1E3A8A;">Struktur Molekul:</b> {data[5]}</p>
 
-    </div>
-    """, unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
 
+    # ================= NAVIGATION =================
+    if home_btn:
+        st.session_state.menu = "🏠 Home"
+        
 # ================= ANALISIS KIMIA =================
 
 elif menu == "🧪 Analisis Kimia":
-    st.title("🧪 Smart Chemical Analysis")
 
-    if st.button("⬅ Kembali ke Home"):
-        go_to("🏠 Home")
+    st.title("🧪 Smart Chemical Analysis")
 
     senyawa = st.selectbox(
         "Pilih Senyawa",
         list(db.keys())
     )
 
-    data = db[senyawa]
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div class='info-box'>
+    tampilkan_analisis = st.button(
+        "🧪 Analisis Senyawa",
+        key="btn_analisis",
+        use_container_width=True
+    )
 
-    <h3>📊 Hasil Analisis Senyawa</h3>
+    if tampilkan_analisis:
 
-    <b>🧪 Nama :</b> {data[0]}<br><br>
+        data = db[senyawa]
+        jenis = data[1]
 
-    <b>📌 Rumus :</b> {senyawa}<br><br>
+        st.markdown("<br>", unsafe_allow_html=True)
 
-    <b>⚗️ Jenis :</b> {data[1]}<br><br>
+        # ================= INTERPRETASI =================
 
-    <b>⚖️ Mr :</b> {data[2]}<br><br>
+        st.subheader("🧪 Interpretasi Kimia")
 
-    <b>⚠️ Bahaya :</b> {data[3]}<br><br>
+        if jenis == "Asam kuat":
+            interpretasi = "Asam kuat yang terionisasi hampir sempurna dalam air dan menghasilkan ion H⁺ dalam jumlah besar."
 
-    <b>🧬 Struktur :</b> {data[5]}
+        elif jenis == "Asam lemah":
+            interpretasi = "Asam lemah yang hanya terionisasi sebagian dalam air."
 
-    </div>
-    """, unsafe_allow_html=True)
+        elif jenis == "Basa kuat":
+            interpretasi = "Basa kuat yang menghasilkan ion OH⁻ dalam jumlah besar."
 
-    st.subheader("🧪 Interpretasi Kimia")
+        elif jenis == "Basa lemah":
+            interpretasi = "Basa lemah yang hanya terionisasi sebagian dalam air."
 
-    jenis = data[1]
+        elif "Garam" in jenis:
+            interpretasi = "Senyawa ionik yang tersusun dari kation dan anion."
 
-    if jenis == "Asam kuat":
-        interpretasi = "Asam kuat yang terionisasi hampir sempurna dalam air dan menghasilkan ion H⁺ dalam jumlah besar."
+        elif jenis == "Alkohol":
+            interpretasi = "Mengandung gugus hidroksil (-OH) dan umum digunakan sebagai pelarut."
 
-    elif jenis == "Asam lemah":
-        interpretasi = "Asam lemah yang hanya terionisasi sebagian dalam air."
+        elif jenis == "Keton":
+            interpretasi = "Mengandung gugus karbonil (>C=O)."
 
-    elif jenis == "Basa kuat":
-        interpretasi = "Basa kuat yang menghasilkan ion OH⁻ dalam jumlah besar."
+        elif jenis == "Aromatik":
+            interpretasi = "Mengandung cincin aromatik yang stabil karena resonansi."
 
-    elif jenis == "Basa lemah":
-        interpretasi = "Basa lemah yang hanya terionisasi sebagian dalam air."
+        elif jenis == "Karbohidrat":
+            interpretasi = "Merupakan sumber energi penting pada sistem biologis."
 
-    elif "Garam" in jenis:
-        interpretasi = "Senyawa ionik yang tersusun dari kation dan anion."
+        elif jenis == "Amida":
+            interpretasi = "Mengandung gugus fungsi amida (-CONH₂)."
 
-    elif jenis == "Alkohol":
-        interpretasi = "Mengandung gugus hidroksil (-OH) dan umum digunakan sebagai pelarut."
+        elif jenis == "Pelarut":
+            interpretasi = "Digunakan untuk melarutkan berbagai senyawa kimia."
 
-    elif jenis == "Keton":
-        interpretasi = "Mengandung gugus karbonil (>C=O)."
+        elif jenis == "Oksidator":
+            interpretasi = "Mampu mengoksidasi zat lain dengan menerima elektron."
 
-    elif jenis == "Aromatik":
-        interpretasi = "Mengandung cincin aromatik yang stabil karena resonansi."
+        else:
+            interpretasi = "Karakteristik kimia mengikuti gugus fungsi utamanya."
 
-    elif jenis == "Karbohidrat":
-        interpretasi = "Merupakan sumber energi penting pada sistem biologis."
+        st.info(interpretasi)
+        st.subheader("🔬 Analisis Spesifik Senyawa")
 
-    elif jenis == "Amida":
-        interpretasi = "Mengandung gugus fungsi amida (-CONH₂)."
+        analisis_spesifik = {
 
-    elif jenis == "Pelarut":
-        interpretasi = "Digunakan untuk melarutkan berbagai senyawa kimia."
+    "HCl":"Asam kuat yang terionisasi sempurna menghasilkan H⁺ dan Cl⁻. Digunakan sebagai titran dan pengatur pH.",
 
-    elif jenis == "Oksidator":
-        interpretasi = "Mampu mengoksidasi zat lain dengan menerima elektron."
+    "H2SO4":"Asam diprotik kuat dengan sifat dehidrasi tinggi. Banyak digunakan dalam analisis dan industri.",
 
-    else:
-        interpretasi = "Karakteristik kimia mengikuti gugus fungsi utamanya."
+    "HNO3":"Asam kuat sekaligus oksidator yang mampu mengoksidasi berbagai logam.",
 
-    st.info(interpretasi)
-    
-    st.subheader("🔬 Analisis Spesifik Senyawa")
+    "HF":"Asam lemah yang sangat berbahaya karena dapat menembus jaringan tubuh.",
 
-    analisis_spesifik = {
+    "H3BO3":"Asam lemah yang digunakan sebagai antiseptik dan bahan baku industri.",
 
-"HCl":"Terionisasi sempurna dalam air menghasilkan ion H⁺ dan Cl⁻. Banyak digunakan sebagai titran dan pengatur pH.",
+    "CH3COOH":"Asam organik lemah yang digunakan dalam sintesis organik dan pembuatan buffer.",
 
-"H2SO4":"Asam diprotik kuat dengan sifat dehidrasi tinggi. Bereaksi eksotermik saat dicampur air.",
+    "NaOH":"Basa kuat yang menghasilkan ion OH⁻ dalam jumlah besar dan bersifat korosif.",
 
-"HNO3":"Asam kuat sekaligus oksidator yang mampu mengoksidasi berbagai logam dan senyawa organik.",
+    "KOH":"Basa kuat yang digunakan dalam industri sabun dan baterai.",
 
-"CH3COOH":"Asam lemah yang terionisasi sebagian dalam air dan sering digunakan sebagai pereaksi sintesis organik.",
+    "Ca(OH)2":"Basa kuat yang digunakan dalam pengolahan air dan industri konstruksi.",
 
-"HF":"Meskipun tergolong asam lemah, memiliki bahaya tinggi karena dapat menembus jaringan dan bereaksi dengan kalsium tubuh.",
+    "NH3":"Basa lemah yang membentuk ion amonium dalam air dan digunakan dalam industri pupuk.",
 
-"H3BO3":"Asam lemah yang sering digunakan sebagai antiseptik dan bahan baku berbagai produk kimia.",
+    "NH4OH":"Larutan amonia dalam air yang bersifat basa lemah.",
 
-"NaOH":"Basa kuat yang terdisosiasi sempurna menghasilkan ion OH⁻ dan sering digunakan sebagai titran standar.",
+    "NaCl":"Garam netral yang terdisosiasi menjadi ion Na⁺ dan Cl⁻.",
 
-"KOH":"Basa kuat yang umum digunakan pada industri sabun dan elektrolit baterai.",
+    "KCl":"Sumber ion kalium yang banyak digunakan dalam pupuk dan laboratorium.",
 
-"Ca(OH)2":"Basa kuat yang menghasilkan ion OH⁻ dalam larutan dan sering digunakan untuk pengolahan air.",
+    "AgNO3":"Digunakan dalam analisis argentometri dan pembentukan endapan halida.",
 
-"NH3":"Basa lemah yang membentuk ion amonium dalam air dan banyak digunakan dalam industri pupuk.",
+    "CuSO4":"Sumber ion Cu²⁺ yang digunakan dalam analisis kualitatif dan uji biuret.",
 
-"NH4OH":"Basa lemah yang menghasilkan ion amonium dan ion hidroksida dalam larutan.",
+    "FeCl3":"Digunakan sebagai pereaksi identifikasi fenol karena membentuk kompleks berwarna.",
 
-"NaCl":"Garam yang terdisosiasi menghasilkan ion Na⁺ dan Cl⁻ dalam larutan.",
+    "MgSO4":"Garam magnesium yang digunakan dalam farmasi dan laboratorium.",
 
-"KCl":"Garam yang menghasilkan ion kalium dan klorida dalam larutan serta banyak digunakan di laboratorium.",
+    "Na2CO3":"Garam basa yang digunakan untuk meningkatkan pH larutan.",
 
-"AgNO3":"Menghasilkan ion Ag⁺ yang digunakan dalam analisis argentometri dan pembentukan endapan halida.",
+    "NaHCO3":"Bereaksi dengan asam menghasilkan gas karbon dioksida.",
 
-"CuSO4":"Sumber ion Cu²⁺ yang sering digunakan dalam analisis kualitatif dan pereaksi biuret.",
+    "Pb(NO3)2":"Sumber ion Pb²⁺ yang digunakan dalam berbagai analisis kimia.",
 
-"FeCl3":"Digunakan sebagai pereaksi identifikasi fenol karena membentuk kompleks berwarna.",
+    "ZnSO4":"Sumber ion seng yang digunakan dalam industri dan laboratorium.",
 
-"MgSO4":"Garam yang terdisosiasi menghasilkan ion magnesium dan sulfat dalam larutan.",
+    "Na2SO4":"Garam sulfat yang stabil dan mudah larut dalam air.",
 
-"Na2CO3":"Garam basa yang dapat meningkatkan pH larutan dan digunakan dalam berbagai proses industri.",
+    "HgCl2":"Senyawa merkuri yang sangat toksik dan memerlukan penanganan khusus.",
 
-"NaHCO3":"Garam basa yang dapat bereaksi dengan asam menghasilkan gas karbon dioksida.",
+    "NaNO3":"Garam yang mengandung ion nitrat dan digunakan sebagai bahan baku pupuk.",
 
-"Pb(NO3)2":"Menghasilkan ion Pb²⁺ dalam larutan dan sering digunakan sebagai pereaksi analisis kimia.",
+    "NH4Cl":"Garam amonium yang digunakan dalam buffer dan pupuk.",
 
-"ZnSO4":"Sumber ion Zn²⁺ yang digunakan dalam berbagai aplikasi laboratorium dan industri.",
+    "NH4NO3":"Sumber nitrogen penting dalam industri pupuk.",
 
-"Na2SO4":"Garam yang terdisosiasi menghasilkan ion natrium dan sulfat dalam larutan.",
+    "CaCO3":"Komponen utama batu kapur dan cangkang organisme.",
 
-"HgCl2":"Sumber ion merkuri(II) yang bersifat sangat toksik dan memerlukan penanganan khusus.",
+    "MgCl2":"Sumber ion magnesium yang mudah larut dalam air.",
 
-"NaNO3":"Garam yang mengandung ion nitrat dan digunakan dalam berbagai proses industri.",
+    "Al2(SO4)3":"Digunakan sebagai koagulan dalam pengolahan air.",
 
-"NH4Cl":"Garam amonium yang menghasilkan ion NH4⁺ dan Cl⁻ dalam larutan.",
+    "FeSO4":"Sumber ion Fe²⁺ yang digunakan dalam farmasi dan analisis.",
 
-"NH4NO3":"Garam yang mengandung ion amonium dan nitrat serta digunakan sebagai sumber nitrogen.",
+    "CuCl2":"Sumber ion Cu²⁺ yang digunakan dalam sintesis dan analisis kimia.",
 
-"CaCO3":"Garam karbonat yang banyak ditemukan pada batu kapur dan berbagai material alami.",
+    "Na3PO4":"Garam fosfat yang digunakan sebagai pengatur pH dan bahan pembersih.",
 
-"MgCl2":"Garam yang menghasilkan ion magnesium dan klorida dalam larutan.",
+    "KNO3":"Garam yang mengandung ion kalium dan nitrat serta digunakan sebagai pupuk.",
 
-"Al2(SO4)3":"Digunakan dalam pengolahan air dan menghasilkan ion aluminium dalam larutan.",
+    "KMnO4":"Oksidator kuat yang digunakan pada titrasi permanganometri.",
 
-"FeSO4":"Sumber ion Fe²⁺ yang digunakan dalam berbagai analisis dan proses industri.",
+    "K2Cr2O7":"Oksidator kuat yang digunakan pada titrasi redoks.",
 
-"CuCl2":"Sumber ion Cu²⁺ yang digunakan dalam sintesis dan analisis kimia.",
+    "H2O2":"Oksidator yang mudah terurai menjadi air dan oksigen.",
 
-"Na3PO4":"Garam basa yang menghasilkan ion fosfat dan sering digunakan sebagai pengatur pH.",
+    "NaClO":"Digunakan sebagai pemutih dan desinfektan.",
 
-"KNO3":"Garam yang mengandung ion kalium dan nitrat serta dikenal sebagai oksidator.",
+    "CH3OH":"Alkohol sederhana yang sangat toksik dan mudah terbakar.",
 
-"KMnO4":"Oksidator kuat yang digunakan sebagai titran pada permanganometri.",
+    "C2H5OH":"Alkohol yang banyak digunakan sebagai pelarut dan antiseptik.",
 
-"K2Cr2O7":"Oksidator kuat yang digunakan pada titrasi redoks dan mengandung kromium(VI) yang toksik.",
+    "Acetone":"Pelarut organik volatil yang mudah menguap dan mudah terbakar.",
 
-"H2O2":"Oksidator yang mudah terurai menghasilkan air dan oksigen.",
+    "CH3COCH3":"Nama lain aseton yang banyak digunakan sebagai pelarut.",
 
-"NaClO":"Oksidator yang digunakan sebagai pemutih dan desinfektan serta dapat menghasilkan gas klorin jika bereaksi dengan asam.",
+    "Benzene":"Senyawa aromatik yang bersifat karsinogenik.",
 
-"CH3OH":"Alkohol sederhana yang sangat toksik dan dapat menyebabkan kebutaan bila tertelan.",
+    "Toluene":"Turunan benzena yang digunakan sebagai pelarut organik.",
 
-"C2H5OH":"Alkohol yang bercampur sempurna dengan air dan banyak digunakan sebagai pelarut serta antiseptik.",
+    "CHCl3":"Kloroform yang digunakan sebagai pelarut dalam sintesis organik.",
 
-"Acetone":"Pelarut organik volatil yang mudah menguap dan bercampur sempurna dengan air.",
+    "CCl4":"Karbon tetraklorida yang bersifat hepatotoksik.",
 
-"CH3COCH3":"Pelarut organik volatil yang mudah menguap dan bercampur sempurna dengan air.",
+    "Glucose":"Monosakarida yang merupakan sumber energi utama makhluk hidup.",
 
-"Benzene":"Senyawa aromatik nonpolar yang stabil karena resonansi dan bersifat karsinogenik.",
+    "C6H12O6":"Glukosa merupakan gula sederhana yang mudah larut dalam air.",
 
-"Toluene":"Turunan benzena yang banyak digunakan sebagai pelarut dan bahan baku sintesis organik.",
+    "Sucrose":"Disakarida yang tersusun dari glukosa dan fruktosa.",
 
-"CHCl3":"Pelarut organik dengan efek depresan sistem saraf pusat jika terhirup dalam jumlah besar.",
+    "C12H22O11":"Sukrosa merupakan komponen utama gula pasir.",
 
-"CCl4":"Pelarut nonpolar yang bersifat hepatotoksik sehingga penggunaannya kini dibatasi.",
+    "Urea":"Senyawa amida yang digunakan sebagai bahan baku pupuk.",
 
-"Glucose":"Karbohidrat sederhana golongan monosakarida yang merupakan sumber energi utama bagi organisme hidup.",
+    "BaCl2":"Barium klorida digunakan untuk identifikasi ion sulfat.",
 
-"C6H12O6":"Karbohidrat sederhana golongan monosakarida yang merupakan sumber energi utama bagi organisme hidup.",
+    "BaSO4":"Endapan putih yang sering digunakan pada analisis gravimetri.",
 
-"Sucrose":"Karbohidrat golongan disakarida yang tersusun dari glukosa dan fruktosa.",
+    "CaCl2":"Garam yang higroskopis dan sering digunakan sebagai pengering.",
 
-"C12H22O11":"Karbohidrat golongan disakarida yang tersusun dari glukosa dan fruktosa.",
+    "NaBr":"Garam bromida yang larut baik dalam air.",
 
-"Urea":"Senyawa amida yang banyak digunakan sebagai bahan baku pupuk dan berbagai proses kimia."
+    "KI":"Sumber ion iodida yang digunakan pada iodometri.",
 
-}
-    if senyawa in analisis_spesifik:
-        st.success(analisis_spesifik[senyawa])
-    else:
-        st.info("Analisis spesifik senyawa belum tersedia. Analisis didasarkan pada golongan senyawanya.")
+    "I2":"Iodin digunakan sebagai oksidator dan indikator pati.",
 
-    st.subheader("📋 Kesimpulan")
+    "KIO3":"Kalium iodat merupakan standar primer pada iodometri.",
 
-    st.success(f"""
+    "Na2S2O3":"Natrium tiosulfat digunakan sebagai titran pada iodometri.",
+
+    "EDTA":"Agen pengompleks yang digunakan pada titrasi kompleksometri.",
+
+    "NH4SCN":"Amonium tiosianat digunakan pada titrasi Volhard.",
+
+    "K2SO4":"Kalium sulfat digunakan sebagai pupuk dan sumber ion kalium.",
+
+    "Fe2O3":"Oksida besi(III) yang merupakan komponen utama karat.",
+
+    "CuO":"Oksida tembaga hitam yang digunakan pada berbagai sintesis.",
+
+    "ZnO":"Oksida seng yang digunakan dalam kosmetik dan farmasi.",
+
+    "MgO":"Oksida magnesium yang bersifat basa.",
+
+    "AlCl3":"Katalis yang sering digunakan dalam reaksi Friedel-Crafts.",
+
+    "NaF":"Sumber ion fluorida yang digunakan dalam pasta gigi.",
+
+    "KF":"Kalium fluorida sebagai sumber ion fluorida dalam sintesis.",
+
+    "LiCl":"Garam litium yang sangat higroskopis.",
+
+    "Na2B4O7":"Boraks yang digunakan sebagai buffer dan bahan pembersih.",
+
+    "H3PO4":"Asam fosfat yang digunakan dalam industri makanan dan pupuk."
+        }
+
+        if senyawa in analisis_spesifik:
+            st.success(analisis_spesifik[senyawa])
+
+        else:
+            st.info(
+                "Analisis spesifik senyawa belum tersedia. Analisis didasarkan pada golongan senyawanya."
+            )
+
+        # ================= SAFETY ASSESSMENT =================
+
+        st.subheader("⚠️ Safety Assessment")
+
+        bahaya = data[3]
+
+        if "tinggi" in bahaya.lower():
+
+            st.error(
+                "🔴 Risiko Tinggi - Gunakan APD lengkap dan kerjakan di lemari asam."
+            )
+
+        elif "sedang" in bahaya.lower():
+
+            st.warning(
+                "🟠 Risiko Sedang - Hindari kontak langsung dan gunakan sarung tangan."
+            )
+
+        else:
+
+            st.success(
+                "🟢 Risiko Rendah - Tetap ikuti prosedur keselamatan laboratorium."
+            )
+
+        # ================= KARAKTERISTIK KIMIA =================
+
+        st.subheader("🧬 Karakteristik Kimia")
+
+        sifat = {
+
+    "Asam kuat":[
+        "Terionisasi hampir sempurna dalam air",
+        "Elektrolit kuat",
+        "Bersifat korosif terhadap logam dan jaringan"
+    ],
+
+    "Asam lemah":[
+        "Terionisasi sebagian dalam air",
+        "Konduktivitas listrik sedang",
+        "Dapat membentuk larutan buffer"
+    ],
+
+    "Basa kuat":[
+        "Menghasilkan ion OH⁻ dalam jumlah besar",
+        "Elektrolit kuat",
+        "Korosif terhadap kulit dan jaringan"
+    ],
+
+    "Basa lemah":[
+        "Terionisasi sebagian",
+        "Konduktivitas sedang",
+        "Reaktivitas lebih rendah dibanding basa kuat"
+    ],
+
+    "Garam":[
+        "Tersusun dari kation dan anion",
+        "Dapat terdisosiasi dalam larutan",
+        "Beberapa garam dapat mengalami hidrolisis"
+    ],
+
+    "Alkohol":[
+        "Mengandung gugus hidroksil (-OH)",
+        "Mudah menguap",
+        "Sebagian besar mudah terbakar"
+    ],
+
+    "Keton":[
+        "Mengandung gugus karbonil (>C=O)",
+        "Bersifat polar",
+        "Sering digunakan sebagai pelarut organik"
+    ],
+
+    "Aromatik":[
+        "Mengandung cincin aromatik",
+        "Stabil karena resonansi",
+        "Umumnya bersifat nonpolar"
+    ],
+
+    "Karbohidrat":[
+        "Mengandung gugus hidroksil dan karbonil",
+        "Larut dalam air",
+        "Merupakan sumber energi biologis"
+    ],
+
+    "Amida":[
+        "Mengandung gugus -CONH₂",
+        "Mampu membentuk ikatan hidrogen",
+        "Banyak digunakan dalam sintesis organik"
+    ],
+
+    "Pelarut":[
+        "Melarutkan berbagai senyawa",
+        "Umumnya volatil",
+        "Digunakan dalam proses laboratorium"
+    ],
+
+    "Oksidator":[
+        "Mampu menerima elektron",
+        "Mempercepat reaksi oksidasi",
+        "Dapat bereaksi kuat dengan bahan organik"
+        
+            ]
+        }
+
+        if jenis in sifat:
+
+            for item in sifat[jenis]:
+                st.write("✔️", item)
+
+        else:
+
+            st.info("Karakteristik spesifik belum tersedia.")
+
+       # ================= PREDIKSI =================
+
+        st.subheader("🔬 Prediksi Perilaku Laboratorium")
+
+        if "Asam" in jenis:
+            st.info(
+                "• Bereaksi dengan basa menghasilkan garam dan air.\n"
+                "• Mengubah indikator menjadi merah.\n"
+                "• Bersifat donor proton (H⁺)."
+            )
+
+        elif "Basa" in jenis:
+            st.info(
+                "• Bereaksi dengan asam menghasilkan garam dan air.\n"
+                "• Mengubah indikator menjadi biru.\n"
+                "• Bersifat akseptor proton."
+            )
+
+        elif "Garam" in jenis:
+            st.info(
+                "• Dapat mengalami hidrolisis.\n"
+                "• Dapat membentuk endapan dengan ion tertentu.\n"
+                "• Meningkatkan konduktivitas larutan."
+            )
+
+        else:
+            st.info(
+                "• Perilaku dipengaruhi gugus fungsi utama.\n"
+                "• Digunakan sebagai pereaksi atau pelarut."
+    )
+
+        # ================= NFPA =================
+        st.subheader("🚨 NFPA Hazard Indicator")
+
+        nfpa = {
+            "HCl": (0,3,1),
+            "H2SO4": (0,3,2),
+            "HNO3": (0,4,2),
+            "HF": (0,4,0),
+            "H3BO3": (0,1,0),
+            "CH3COOH": (2,2,0),
+            "NaOH": (0,3,1),
+            "KOH": (0,3,1),
+            "Ca(OH)2": (0,2,0),
+            "NH3": (1,3,0),
+            "NH4OH": (1,3,0),
+            "NaCl": (0,0,0),
+            "KCl": (0,1,0),
+            "AgNO3": (0,2,1),
+            "CuSO4": (0,2,0),
+            "FeCl3": (0,3,1),
+            "MgSO4": (0,1,0),
+            "Na2CO3": (0,1,0),
+            "NaHCO3": (0,1,0),
+            "Pb(NO3)2": (0,3,1),
+            "ZnSO4": (0,2,0),
+            "Na2SO4": (0,0,0),
+            "HgCl2": (0,4,0),
+            "NaNO3": (0,2,1),
+            "NH4Cl": (0,2,0),
+            "NH4NO3": (0,2,3),
+            "CaCO3": (0,0,0),
+            "MgCl2": (0,1,0),
+            "Al2(SO4)3": (0,1,0),
+            "FeSO4": (0,1,0),
+            "CuCl2": (0,2,1),
+            "Na3PO4": (0,2,0),
+            "KNO3": (0,1,2),
+            "KMnO4": (0,2,3),
+            "K2Cr2O7": (0,3,3),
+            "H2O2": (0,2,2),
+            "NaClO": (0,3,1),
+            "CH3OH": (3,2,0),
+            "C2H5OH": (3,2,0),
+            "Acetone": (3,1,0),
+            "CH3COCH3": (3,1,0),
+            "Benzene": (3,2,0),
+            "Toluene": (3,2,0),
+            "CHCl3": (0,2,0),
+            "CCl4": (0,2,0),
+            "Glucose": (1,0,0),
+            "C6H12O6": (1,0,0),
+            "Sucrose": (1,0,0),
+            "C12H22O11": (1,0,0),
+            "Urea": (0,1,0),
+            "BaCl2": (0,2,0),
+            "BaSO4": (0,1,0),
+            "CaCl2": (0,1,0),
+            "NaBr": (0,1,0),
+            "KI": (0,1,0),
+            "I2": (0,2,1),
+            "KIO3": (0,2,2),
+            "Na2S2O3": (0,1,0),
+            "EDTA": (0,1,0),
+            "NH4SCN": (0,2,1),
+            "K2SO4": (0,1,0),
+            "Fe2O3": (0,1,0),
+            "CuO": (0,1,0),
+            "ZnO": (0,1,0),
+            "MgO": (0,1,0),
+            "AlCl3": (0,3,1),
+            "NaF": (0,2,0),
+            "KF": (0,2,0),
+            "LiCl": (0,2,0),
+            "Na2B4O7": (0,1,0),
+            "H3PO4": (0,2,0)
+        }
+
+        def interpretasi_nfpa(nilai):
+            if nilai == 0:
+                return "Sangat Rendah"
+            elif nilai == 1:
+                return "Rendah"
+            elif nilai == 2:
+                return "Sedang"
+            elif nilai == 3:
+                return "Tinggi"
+            elif nilai == 4:
+                return "Sangat Tinggi"
+            return "-"
+
+        if senyawa in nfpa:
+
+            f, h, r = nfpa[senyawa]
+
+            c1, c2, c3 = st.columns(3)
+
+            with c1:
+                st.metric("🔥 Flammability", f, interpretasi_nfpa(f))
+
+            with c2:
+                st.metric("☣️ Health", h, interpretasi_nfpa(h))
+
+            with c3:
+                st.metric("⚛️ Reactivity", r, interpretasi_nfpa(r))
+
+        else:
+            st.info("Data NFPA belum tersedia.")
+
+        # ================= KESIMPULAN =================
+        st.subheader("📋 Kesimpulan")
+
+        kesimpulan = f"""
 {data[0]} merupakan senyawa golongan {data[1].lower()}
 dengan massa molekul relatif {data[2]}.
+"""
 
-Berdasarkan data yang tersedia, senyawa ini memiliki tingkat bahaya
-berupa {data[3].lower()} sehingga memerlukan penanganan yang sesuai
-dengan prosedur keselamatan laboratorium.
-""")
-    
+        if senyawa in nfpa:
+
+            f, h, r = nfpa[senyawa]
+
+            kesimpulan += f"""
+Berdasarkan karakteristik kimianya, senyawa ini termasuk
+golongan {data[1].lower()} yang memiliki sifat dan perilaku
+khas dalam berbagai reaksi kimia.
+
+Data NFPA menunjukkan tingkat kemudahan terbakar
+(Flammability) sebesar {f}, tingkat bahaya kesehatan
+(Health Hazard) sebesar {h}, dan tingkat reaktivitas
+(Reactivity) sebesar {r}.
+"""
+
+            if h >= 3:
+                kesimpulan += """
+Senyawa ini memiliki risiko kesehatan yang tinggi sehingga
+paparan langsung harus dihindari.
+"""
+
+            elif h == 2:
+                kesimpulan += """
+Senyawa ini memiliki risiko kesehatan sedang.
+"""
+
+            else:
+                kesimpulan += """
+Risiko kesehatan relatif rendah.
+"""
+
+            if f >= 3:
+                kesimpulan += """
+Senyawa mudah terbakar.
+"""
+
+            elif f == 2:
+                kesimpulan += """
+Senyawa memiliki potensi terbakar.
+"""
+
+            if r >= 2:
+                kesimpulan += """
+Reaktivitas cukup tinggi sehingga perlu kehati-hatian.
+"""
+
+        else:
+            kesimpulan += f"""
+Berdasarkan data yang tersedia, senyawa ini memiliki tingkat
+bahaya {data[3].lower()}.
+"""
+
+        st.success(kesimpulan)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("⬅️ Kembali ke Home", key="home_analisis"):
+            st.session_state.menu = "🏠 Home"
+            st.rerun()
+
 # ================= TENTANG =================
 
-elif menu=="ℹ️ Tentang":
+if menu == "ℹ️ Tentang":
 
     st.title("ℹ️ Tentang Aplikasi")
 
     st.markdown("""
-    <div class="tentang-box">
+    <div style="
+        background:#1E293B;
+        padding:20px;
+        border-radius:15px;
+        color:white;
+        box-shadow:0 6px 15px rgba(0,0,0,0.3);
+    ">
 
     <h2>🧪 ChemAssist Pro</h2>
 
@@ -1350,18 +2068,7 @@ elif menu=="ℹ️ Tentang":
         <li>Python</li>
         <li>Streamlit</li>
     </ul>
-    <h3>👨‍💻 Creator</h3>
 
-    <p>
-    1.	Adlina Dhiva Tsaniyah
-    2.	Davina Faiza Laksono
-    3.	Rachel Rafa Rashika
-    4.  Tantri Nirwana Bandiani
-    </p>
-
-    <p>
-    Program Studi Analisis Kimia
-</p>
     <h3>🎓 Dikembangkan Untuk</h3>
 
     <p>
@@ -1369,9 +2076,18 @@ elif menu=="ℹ️ Tentang":
     kimia dasar, serta perhitungan laboratorium.
     </p>
 
+    <h3>👥 Creator Team</h3>
+
+    <ul>
+        <li><b>Adlina Dhiva Tsaniyah</b> (2560555)</li>
+        <li><b>Davina Faiza Laksono</b> (2560605)</li>
+        <li><b>Rachel Rafa Rashika</b> (2560738)</li>
+        <li><b>Tantri Nirwana Bandiani</b> (2560795)</li>
+    </ul>
+
     <h3>📌 Versi</h3>
 
-    <p>ChemAssist Ultra v5.0</p>
+    <p><b>ChemAssist Ultra v5.0</b></p>
 
     </div>
     """, unsafe_allow_html=True)
