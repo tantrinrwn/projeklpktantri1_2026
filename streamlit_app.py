@@ -2027,12 +2027,15 @@ bahaya {data[3].lower()}.
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-    if st.button("⬅️ Kembali ke Home", key="home_analisis"):
+        if st.session_state.analisis_selesai:
 
-        st.session_state.analisis_selesai = False
-        st.session_state.menu = "🏠 Home"
+            if st.button("⬅️ Kembali ke Home", key="home_analisis"):
 
-        st.rerun()
+            st.session_state.analisis_selesai = False
+            st.session_state.menu = "🏠 Home"
+
+            st.rerun()
+    
 # ================= TENTANG =================
 
 if menu == "ℹ️ Tentang":
