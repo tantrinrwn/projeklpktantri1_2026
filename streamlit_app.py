@@ -768,10 +768,10 @@ elif st.session_state.menu == "ℹ️ Tentang":
     
 # ================= DARK MODE =================
 
-if dark_mode:
+    if dark_mode:
 
-    st.markdown("""
-    <style>
+        st.markdown("""
+        <style>
 
     /* ================= BACKGROUND ================= */
 
