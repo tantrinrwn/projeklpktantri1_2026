@@ -1502,6 +1502,7 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
                 key="btn_analisis",
                 use_container_width=True
             )
+            
     if tampilkan_analisis:
         st.session_state.analisis_selesai = True
 
