@@ -944,9 +944,9 @@ elif st.session_state.menu == "ℹ️ Tentang":
     
 # ================= HOME =================
 
-if menu == "🏠 Home":
+    if menu == "🏠 Home":
 
-    st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
 
     # ================= Statistik =================
 
