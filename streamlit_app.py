@@ -2033,60 +2033,60 @@ bahaya {data[3].lower()}.
 
 # ================= TENTANG =================
 
-    if menu == "ℹ️ Tentang":
+        if menu == "ℹ️ Tentang":
 
-        st.title("ℹ️ Tentang Aplikasi")
+            st.title("ℹ️ Tentang Aplikasi")
 
-        st.markdown("""
-        <div style="
-            background:#1E293B;
-            padding:20px;
-            border-radius:15px;
-            color:white;
-            box-shadow:0 6px 15px rgba(0,0,0,0.3);
-        ">
+            st.markdown("""
+            <div style="
+                background:#1E293B;
+                padding:20px;
+                border-radius:15px;
+                color:white;
+                box-shadow:0 6px 15px rgba(0,0,0,0.3);
+            ">
 
-        <h2>🧪 ChemAssist Pro</h2>
+            <h2>🧪 ChemAssist Pro</h2>
 
-        <p>
-        Aplikasi laboratorium kimia interaktif berbasis Python dan Streamlit.
-        </p>
+            <p>
+            Aplikasi laboratorium kimia interaktif berbasis Python dan Streamlit.
+            </p>
 
-        <h3>🚀 Fitur Utama</h3>
+            <h3>🚀 Fitur Utama</h3>
 
-        <ul>
-            <li>Smart Solution Maker</li>
-            <li>Smart pH Calculator</li>
-            <li>Informasi Bahan Kimia</li>
-            <li>Smart Chemical Analysis</li>
-        </ul>
+            <ul>
+                <li>Smart Solution Maker</li>
+                <li>Smart pH Calculator</li>
+                <li>Informasi Bahan Kimia</li>
+                <li>Smart Chemical Analysis</li>
+            </ul>
 
-        <h3>👨‍💻 Teknologi</h3>
+            <h3>👨‍💻 Teknologi</h3>
 
-        <ul>
-            <li>Python</li>
-            <li>Streamlit</li>
-        </ul>
+            <ul>
+                <li>Python</li>
+                <li>Streamlit</li>
+            </ul>
 
-        <h3>🎓 Dikembangkan Untuk</h3>
+            <h3>🎓 Dikembangkan Untuk</h3>
 
-        <p>
-        Praktikum dan pembelajaran kimia analitik,
-        kimia dasar, serta perhitungan laboratorium.
-        </p>
+            <p>
+            Praktikum dan pembelajaran kimia analitik,
+            kimia dasar, serta perhitungan laboratorium.
+            </p>
 
-        <h3>👥 Creator Team</h3>
+            <h3>👥 Creator Team</h3>
 
-        <ul>
-            <li><b>Adlina Dhiva Tsaniyah</b> (2560555)</li>
-            <li><b>Davina Faiza Laksono</b> (2560605)</li>
-            <li><b>Rachel Rafa Rashika</b> (2560738)</li>
-            <li><b>Tantri Nirwana Bandiani</b> (2560795)</li>
-        </ul>
+            <ul>
+                <li><b>Adlina Dhiva Tsaniyah</b> (2560555)</li>
+                <li><b>Davina Faiza Laksono</b> (2560605)</li>
+                <li><b>Rachel Rafa Rashika</b> (2560738)</li>
+                <li><b>Tantri Nirwana Bandiani</b> (2560795)</li>
+            </ul>
 
-        <h3>📌 Versi</h3>
+            <h3>📌 Versi</h3>
 
-        <p><b>ChemAssist Ultra v5.0</b></p>
+            <p><b>ChemAssist Ultra v5.0</b></p>
 
-        </div>
-        """, unsafe_allow_html=True)
+            </div>
+            """, unsafe_allow_html=True)
