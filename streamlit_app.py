@@ -1473,6 +1473,7 @@ elif menu == "📚 Informasi Bahan Kimia":
 elif st.session_state.menu == "🧪 Analisis Kimia":
 
     st.title("🧪 Smart Chemical Analysis")
+    st.write("STATUS:", st.session_state.analisis_selesai)
 
     senyawa = st.selectbox(
         "Pilih Senyawa",
