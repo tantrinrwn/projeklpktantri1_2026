@@ -655,14 +655,14 @@ with st.sidebar:
         )
 
     if "dark_mode" not in st.session_state:
-    st.session_state.dark_mode = False
+        st.session_state.dark_mode = False
 
-    dark_mode = st.toggle(
-        "🌙 Dark Mode",
-        value=st.session_state.dark_mode
-    )
+        dark_mode = st.toggle(
+            "🌙 Dark Mode",
+            value=st.session_state.dark_mode
+          )
 
-    st.session_state.dark_mode = dark_mode
+        st.session_state.dark_mode = dark_mode
 
     if dark_mode:
         sidebar_bg = "#0F172A"
