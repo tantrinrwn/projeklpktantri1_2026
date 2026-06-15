@@ -1473,7 +1473,6 @@ elif menu == "📚 Informasi Bahan Kimia":
 elif st.session_state.menu == "🧪 Analisis Kimia":
 
     st.title("🧪 Smart Chemical Analysis")
-    st.write("STATUS:", st.session_state.analisis_selesai)
 
     senyawa = st.selectbox(
         "Pilih Senyawa",
@@ -1503,11 +1502,11 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
                 key="btn_analisis",
                 use_container_width=True
             )
-
     if tampilkan_analisis:
+        st.session_state.analisis_selesai = True
 
-        st.session_state.analisis_selesai = True        
-        
+    if st.session_state.analisis_selesai:
+
         data = db[senyawa]
         jenis = data[1]
 
