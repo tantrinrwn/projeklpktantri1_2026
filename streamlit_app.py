@@ -2031,10 +2031,10 @@ bahaya {data[3].lower()}.
 
             if st.button("⬅️ Kembali ke Home", key="home_analisis"):
 
-            st.session_state.analisis_selesai = False
-            st.session_state.menu = "🏠 Home"
+                st.session_state.analisis_selesai = False
+                st.session_state.menu = "🏠 Home"
 
-            st.rerun()
+                st.rerun()
     
 # ================= TENTANG =================
 
