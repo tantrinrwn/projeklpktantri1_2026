@@ -672,7 +672,7 @@ with st.sidebar:
         nav_bg = "#FFFFFF"
         nav_text = "#0F172A"
 
-     selected = option_menu(
+    selected = option_menu(
         menu_title="✨ ChemAssist Menu",
 
         options=[
