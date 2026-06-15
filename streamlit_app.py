@@ -765,7 +765,9 @@ elif st.session_state.menu == "🧪 Analisis Kimia":
 
 elif st.session_state.menu == "ℹ️ Tentang":
     tentang()
-    
+
+
+menu = selected
 # ================= DARK MODE =================
 
 if dark_mode:
@@ -937,7 +939,6 @@ if dark_mode:
     </style>
     """, unsafe_allow_html=True)
 
-    menu = selected
     
 # ================= HOME =================
 
