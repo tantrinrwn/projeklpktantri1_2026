@@ -663,82 +663,82 @@ with st.sidebar:
 
         st.session_state.dark_mode = dark_mode
 
-    if dark_mode:
-        sidebar_bg = "#0F172A"
-        nav_bg = "#1E293B"
-        nav_text = "white"
-    else:
-        sidebar_bg = "#E0F2FE"
-        nav_bg = "#FFFFFF"
-        nav_text = "#0F172A"
+        if dark_mode:
+            sidebar_bg = "#0F172A"
+            nav_bg = "#1E293B"
+            nav_text = "white"
+        else:
+            sidebar_bg = "#E0F2FE"
+            nav_bg = "#FFFFFF"
+            nav_text = "#0F172A"
 
-    selected = option_menu(
-        menu_title="✨ ChemAssist Menu",
+        selected = option_menu(
+            menu_title="✨ ChemAssist Menu",
 
-        options=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ],
+            options=[
+                "🏠 Home",
+                "💧 Larutan",
+                "⚗️ pH",
+                "📚 Informasi Bahan Kimia",
+                "🧪 Analisis Kimia",
+                "ℹ️ Tentang"
+            ],
 
-        icons=[
-            "house-fill",
-            "droplet-fill",
-            "eyedropper",
-            "book-fill",
-            "activity",
-            "info-circle-fill"
-        ],
+            icons=[
+                "house-fill",
+                "droplet-fill",
+                "eyedropper",
+                "book-fill",
+                "activity",
+                "info-circle-fill"
+            ],
 
-        menu_icon="stars",
+            menu_icon="stars",
 
-        default_index=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ].index(st.session_state.menu),
+            default_index=[
+                "🏠 Home",
+                "💧 Larutan",
+                "⚗️ pH",
+                "📚 Informasi Bahan Kimia",
+                "🧪 Analisis Kimia",
+                "ℹ️ Tentang"
+            ].index(st.session_state.menu),
 
-        styles={
+            styles={
 
-            "container": {
-                "padding": "15px",
-                "background-color": sidebar_bg,
-                "border-radius": "20px",
-            },
+                "container": {
+                    "padding": "15px",
+                    "background-color": sidebar_bg,
+                    "border-radius": "20px",
+                },
 
-            "icon": {
-                "color": "#38BDF8",
-                "font-size": "20px"
-            },
+                "icon": {
+                    "color": "#38BDF8",
+                    "font-size": "20px"
+                },
 
-            "nav-link": {
-                "font-size": "17px",
-                "text-align": "left",
-                "margin": "8px",
-                "padding": "12px",
-                "border-radius": "14px",
-                "background-color": nav_bg,
-                "color": nav_text,
-                "font-weight": "600",
-                "--hover-color": "#334155",
-            },
+                "nav-link": {
+                    "font-size": "17px",
+                    "text-align": "left",
+                    "margin": "8px",
+                    "padding": "12px",
+                    "border-radius": "14px",
+                    "background-color": nav_bg,
+                    "color": nav_text,
+                    "font-weight": "600",
+                    "--hover-color": "#334155",
+                },
 
-            "nav-link-selected": {
-                "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
-                "color": "white",
-                "font-weight": "bold",
-            },
-        }
-    )
-    st.session_state.menu = selected
+                "nav-link-selected": {
+                    "background": "linear-gradient(90deg,#38BDF8,#2563EB)",
+                    "color": "white",
+                    "font-weight": "bold",
+                },
+            }
+        )
+        st.session_state.menu = selected
 
-    st.markdown("---")
+        st.markdown("---")
 
     if st.button("🚪 Logout"):
         st.session_state.login = False
