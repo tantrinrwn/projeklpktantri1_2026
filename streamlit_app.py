@@ -668,7 +668,7 @@ with st.sidebar:
 
     if dark_mode:
         sidebar_bg = "#0F172A"
-        nav_bg = "#1E293B"
+        nav_bg = "#334155"
         nav_text = "white"
     else:
         sidebar_bg = "#E0F2FE"
