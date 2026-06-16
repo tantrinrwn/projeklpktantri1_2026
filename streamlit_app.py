@@ -675,8 +675,18 @@ with st.sidebar:
         nav_bg = "#FFFFFF"
         nav_text = "#0F172A"
 
+    st.markdown("""
+    <h2 style='
+    color:white;
+    text-align:center;
+    margin-bottom:15px;
+    '>
+    ✨ ChemAssist
+    </h2>
+    """, unsafe_allow_html=True)
+    
     selected = option_menu(
-        menu_title="✨ ChemAssist Menu",
+        menu_title=None,
 
         options=[
             "🏠 Home",
@@ -790,6 +800,10 @@ if dark_mode:
     section[data-testid="stSidebar"] h4,
     section[data-testid="stSidebar"] p,
     section[data-testid="stSidebar"] span{
+        color:white !important;
+    }
+
+    .st-emotion-cache-16txtl3{
         color:white !important;
     }
 
