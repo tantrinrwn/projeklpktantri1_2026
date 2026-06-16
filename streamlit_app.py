@@ -681,8 +681,12 @@ with st.sidebar:
     else:
         title_color = "#0F172A"
 
+
     st.markdown(f"""
     <div style="
+    background:{sidebar_bg};
+    padding:12px;
+    border-radius:15px;
     text-align:center;
     font-size:26px;
     font-weight:800;
