@@ -869,7 +869,12 @@ if dark_mode:
     .stSelectbox div[data-baseweb="select"] *{
         color:white !important;
     }
-
+    
+    div[data-baseweb="select"] > div{
+        background-color:#1E293B !important;
+        color:white !important;
+        border:1px solid #334155 !important;
+    }
     /* ================= TEXT ================= */
 
     h1,h2,h3,h4,h5,h6{
