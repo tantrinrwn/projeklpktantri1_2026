@@ -1032,6 +1032,11 @@ else:
 
 
 menu = st.session_state.menu
+
+if dark_mode:
+    home_card_bg = "linear-gradient(135deg,#1E293B,#334155)"
+else:
+    home_card_bg = "linear-gradient(135deg,#60A5FA,#2563EB)"
 # ================= HOME =================
 
 if menu == "🏠 Home":
@@ -1083,9 +1088,9 @@ if menu == "🏠 Home":
             st.session_state.menu = "💧 Larutan"
             st.rerun()
             
-        st.markdown("""
+        st.markdown(f"""
         <div style="
-            background:linear-gradient(135deg,#60A5FA,#2563EB);
+            background:{home_card_bg};
             height:190px;
             padding:25px;
             border-radius:20px;
