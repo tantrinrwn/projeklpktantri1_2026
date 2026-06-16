@@ -717,7 +717,7 @@ with st.sidebar:
         menu_icon="stars",
 
        
-        styles={,
+        styles={
             "container": {
                 "padding": "15px",
                 "background-color": sidebar_bg,
