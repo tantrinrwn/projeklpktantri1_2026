@@ -617,6 +617,8 @@ db={
 
 def go_to(page_name):
     st.session_state.menu = page_name
+    st.rerun()
+
 
 if "menu" not in st.session_state:
     st.session_state.menu = "🏠 Home"
@@ -1018,8 +1020,7 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
-            st.session_state.menu = "💧 Larutan"
-            st.rerun()
+            go_to("📚 Informasi Kimia")
             
         st.markdown("""
         <div style="
@@ -1041,8 +1042,7 @@ if menu == "🏠 Home":
     with col2:
 
         if st.button("⚗️ Kalkulator pH", use_container_width=True):
-            st.session_state.menu = "⚗️ pH"
-            st.rerun()
+            go_to("⚗️ pH")
 
         st.markdown("""
         <div style="
@@ -1062,8 +1062,7 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
-            st.session_state.menu = "🧪 Analisis Kimia"
-            st.rerun()
+            go_to("🧪 Analisis Kimia")
             
         st.markdown("""
         <div style="
