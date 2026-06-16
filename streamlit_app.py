@@ -921,6 +921,15 @@ if dark_mode:
     </style>
     """, unsafe_allow_html=True)
 
+if dark_mode:
+    CARD_BG = "#1E293B"
+    CARD_TEXT = "white"
+    CARD_BORDER = "#334155"
+else:
+    CARD_BG = "#F8FAFC"
+    CARD_TEXT = "#0F172A"
+    CARD_BORDER = "#E2E8F0"
+
 
 menu = st.session_state.menu
 # ================= HOME =================
@@ -1434,13 +1443,13 @@ elif menu == "📚 Informasi Bahan Kimia":
 
         st.markdown(f"""
         <div style="
-            background:#F8FAFC;
+            background:{CARD_BG};
             padding:22px;
             border-radius:16px;
-            color:#0F172A;
+            color:{CARD_TEXT};
             box-shadow:0 8px 20px rgba(0,0,0,0.12);
             line-height:1.7;
-            border:1px solid #E2E8F0;
+            border:1px solid {CARD_BORDER};
         ">
 
         <h3 style="
