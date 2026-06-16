@@ -767,7 +767,7 @@ with st.sidebar:
         st.session_state.nama = ""
         st.rerun()
 
-menu = selected
+menu = st.session_state.menu
 # ================= DARK MODE =================
 
 if dark_mode:
