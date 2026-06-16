@@ -233,18 +233,18 @@ button[data-baseweb="tab"] {
 }
 
 
+
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
 
-    background: rgba(255,255,255,0.55);
+    background: #0F172A;
 
     backdrop-filter: blur(20px);
 
     border-right:
-        1px solid rgba(255,255,255,0.4);
+        1px solid rgba(255,255,255,0.1);
 }
-
 
 /* ================= CARD ================= */
 
