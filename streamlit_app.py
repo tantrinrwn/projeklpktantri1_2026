@@ -997,8 +997,9 @@ if menu == "🏠 Home":
     with col1:
 
         if st.button("💧 Buka Menu Larutan", use_container_width=True):
-            go_to("💧 Larutan")
-
+            st.session_state.menu = "💧 Larutan"
+            st.rerun()
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1017,8 +1018,9 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
-            go_to("📚 Informasi Bahan Kimia")
-
+            st.session_state.menu = "💧 Larutan"
+            st.rerun()
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
@@ -1039,7 +1041,8 @@ if menu == "🏠 Home":
     with col2:
 
         if st.button("⚗️ Kalkulator pH", use_container_width=True):
-            go_to("⚗️ pH")
+            st.session_state.menu = "⚗️ pH"
+            st.rerun()
 
         st.markdown("""
         <div style="
@@ -1059,8 +1062,9 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("🧪 Analisis Kimia", use_container_width=True):
-            go_to("🧪 Analisis Kimia")
-
+            st.session_state.menu = "🧪 Analisis Kimia"
+            st.rerun()
+            
         st.markdown("""
         <div style="
             background:linear-gradient(135deg,#60A5FA,#2563EB);
