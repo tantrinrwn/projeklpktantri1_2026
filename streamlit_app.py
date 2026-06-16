@@ -232,18 +232,16 @@ button[data-baseweb="tab"] {
     background: #EFF6FF !important;
 }
 
-
-
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
 
-    background: #0F172A;
+    background: rgba(255,255,255,0.55);
 
     backdrop-filter: blur(20px);
 
     border-right:
-        1px solid rgba(255,255,255,0.1);
+        1px solid rgba(255,255,255,0.4);
 }
 
 /* ================= CARD ================= */
@@ -796,6 +794,10 @@ if dark_mode:
     }
 
     section[data-testid="stSidebar"] > div{
+        background:#0F172A !important;
+    }
+
+    [data-testid="stSidebarContent"]{
         background:#0F172A !important;
     }
 
