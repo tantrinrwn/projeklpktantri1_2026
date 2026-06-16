@@ -667,7 +667,7 @@ with st.sidebar:
 
 
     if dark_mode:
-        sidebar_bg = "#020617"
+        sidebar_bg = "#0B1120"
         nav_bg = "#1E293B"
         nav_text = "white"
     else:
@@ -775,6 +775,20 @@ if dark_mode:
 
     st.markdown("""
     <style>
+
+    /* ===== SIDEBAR FULL DARK ===== */
+
+    section[data-testid="stSidebar"]{
+        background:#0B1120 !important;
+    }
+
+    section[data-testid="stSidebar"] > div{
+        background:#0B1120 !important;
+    }
+
+    [data-testid="stSidebarContent"]{
+        background:#0B1120 !important;
+    }
 
     /* ================= BACKGROUND ================= */
 
