@@ -675,14 +675,22 @@ with st.sidebar:
         nav_bg = "#FFFFFF"
         nav_text = "#0F172A"
 
-    st.markdown("""
-    <h2 style='
-    color:white;
+
+    if dark_mode:
+        title_color = "white"
+    else:
+        title_color = "#0F172A"
+
+    st.markdown(f"""
+    <div style="
     text-align:center;
+    font-size:26px;
+    font-weight:800;
+    color:{title_color};
     margin-bottom:15px;
-    '>
+    ">
     ✨ ChemAssist
-    </h2>
+    </div>
     """, unsafe_allow_html=True)
     
     selected = option_menu(
