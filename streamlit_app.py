@@ -718,7 +718,6 @@ with st.sidebar:
 
        
         styles={
-
             "container": {
                 "padding": "15px",
                 "background-color": sidebar_bg,
