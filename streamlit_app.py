@@ -747,10 +747,21 @@ with st.sidebar:
                 "font-weight": "bold",
             },
         },
+
+        default_index=[
+            "🏠 Home",
+            "💧 Larutan",
+            "⚗️ pH",
+            "📚 Informasi Bahan Kimia",
+            "🧪 Analisis Kimia",
+            "ℹ️ Tentang"
+        ].index(st.session_state.menu),
         key="sidebar_menu"
     )
-    st.session_state.menu = selected
 
+    if selected != st.session_state.menu:
+        st.session_state.menu = selected
+        
     st.markdown("---")
 
     if st.button("🚪 Logout"):
@@ -1020,7 +1031,7 @@ if menu == "🏠 Home":
         """, unsafe_allow_html=True)
 
         if st.button("📚 Informasi Kimia", use_container_width=True):
-            go_to("📚 Informasi Kimia")
+            go_to("📚 Informasi Bahan Kimia")
             
         st.markdown("""
         <div style="
