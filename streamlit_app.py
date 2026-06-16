@@ -715,8 +715,6 @@ with st.sidebar:
         ],
 
         menu_icon="stars",
-
-       
         styles={
             "container": {
                 "padding": "15px",
