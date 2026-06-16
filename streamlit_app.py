@@ -716,15 +716,7 @@ with st.sidebar:
 
         menu_icon="stars",
 
-        default_index=[
-            "🏠 Home",
-            "💧 Larutan",
-            "⚗️ pH",
-            "📚 Informasi Bahan Kimia",
-            "🧪 Analisis Kimia",
-            "ℹ️ Tentang"
-        ].index(st.session_state.menu),
-
+       
         styles={
 
             "container": {
@@ -756,6 +748,7 @@ with st.sidebar:
                 "font-weight": "bold",
             },
         }
+        key="sidebar_menu"
     )
     st.session_state.menu = selected
 
