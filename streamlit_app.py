@@ -235,8 +235,7 @@ button[data-baseweb="tab"] {
 /* ================= SIDEBAR ================= */
 
 section[data-testid="stSidebar"] {
-
-    background: rgba(255,255,255,0.55);
+    background: var(--sidebar-color);
 
     backdrop-filter: blur(20px);
 
