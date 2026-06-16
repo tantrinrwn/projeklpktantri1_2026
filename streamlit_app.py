@@ -950,6 +950,74 @@ if dark_mode:
     [data-testid="stMetric"] *{
         color:white !important;
     }
+
+    /* ===== CONTAINER UTAMA ===== */
+
+    [data-testid="stVerticalBlock"]{
+        color:white !important;
+    }
+
+    /* ===== INFO SUCCESS WARNING ERROR ===== */
+
+    [data-testid="stAlert"]{
+        background:#1E293B !important;
+        color:white !important;
+        border:1px solid #334155 !important;
+    }
+
+    /* ===== TABS ===== */
+    
+    .stTabs{
+        background:#0F172A !important;
+        border:1px solid #334155 !important;
+    }
+
+    button[data-baseweb="tab"]{
+        color:white !important;
+    }
+
+    /* ===== EXPANDER ===== */
+
+    .streamlit-expanderHeader{
+        background:#1E293B !important;
+        color:white !important;
+    }
+
+    /* ===== SELECTBOX DROPDOWN ===== */
+
+    ul[role="listbox"]{
+        background:#1E293B !important;
+    }
+
+    ul[role="listbox"] li{
+        color:white !important;
+    }
+
+    /* ===== NUMBER INPUT ===== */
+
+    .stNumberInput input{
+        background:#1E293B !important;
+        color:white !important;
+    }
+
+    /* ===== MARKDOWN ===== */
+
+    .stMarkdown{
+        color:white !important;
+    }
+    [data-testid="stVerticalBlock"]{
+        color:white !important;
+    }
+
+    [data-testid="stAlert"]{
+        background:#1E293B !important;
+        color:white !important;
+    }
+
+    .stTabs{
+        background:#0F172A !important;
+    }
+
     </style>
     """, unsafe_allow_html=True)
 
