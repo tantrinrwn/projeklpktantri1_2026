@@ -744,7 +744,7 @@ with st.sidebar:
                 "color": "white",
                 "font-weight": "bold",
             },
-        }
+        },
         key="sidebar_menu"
     )
     st.session_state.menu = selected
