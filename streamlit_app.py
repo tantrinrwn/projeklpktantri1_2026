@@ -731,14 +731,15 @@ with st.sidebar:
                 "font-size": "20px"
             },
 
+
             "nav-link": {
                 "font-size": "17px",
                 "text-align": "left",
                 "margin": "8px",
                 "padding": "12px",
                 "border-radius": "14px",
-                "background-color": nav_bg,
-                "color": nav_text,
+                "background-color": "#1E293B" if dark_mode else "#FFFFFF",
+                "color": "#FFFFFF" if dark_mode else "#0F172A",
                 "font-weight": "600",
                 "--hover-color": "#334155",
             },
@@ -1036,6 +1037,14 @@ if dark_mode:
         background:#0F172A !important;
     }
 
+    .nav-link span{
+        color:white !important;
+    }
+
+    .nav-link-selected span{
+        color:white !important;
+    }
+    
     </style>
     """, unsafe_allow_html=True)
 
