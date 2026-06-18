@@ -720,9 +720,10 @@ with st.sidebar:
 
         menu_icon="stars",
         styles={
+
             "container": {
                 "padding": "15px",
-                "background-color": sidebar_bg,
+                "background-color": "#0B1120" if dark_mode else "#E0F2FE",
                 "border-radius": "20px",
             },
 
